@@ -1,4 +1,4 @@
-package com.github.hfantin.veiculos;
+package com.github.hfantin.veiculos.domain.entity;
 
 public class AppInfo {
     private String name;

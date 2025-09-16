@@ -1,50 +1,347 @@
--- Users table
-CREATE TABLE users (
-   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-   name varchar(100) NOT NULL UNIQUE,
-   email varchar(100) NOT NULL UNIQUE,
-   created_at timestamptz NOT NULL DEFAULT now(),
-   updated_at timestamptz NULL
-);
-
--- Video status enumeration table
-CREATE TABLE file_status (
-  id SMALLINT PRIMARY KEY,
-  status varchar(20) NOT NULL UNIQUE -- PENDING, PROCESSING, PROCESSED, ERROR
+CREATE TABLE brands (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
--- Videos table
--- Videos table (now references status ID)
-CREATE TABLE files (
-    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id uuid NOT NULL REFERENCES users(id),
-    video_file_path varchar(255) NOT NULL,
-    zip_file_path varchar(255),
-    video_file_size bigint, -- Size in bytes
-    zip_file_size bigint, -- Size in bytes
-    status_id SMALLINT NOT NULL REFERENCES file_status(id),
-    processing_result varchar(255) DEFAULT NULL,
-    created_at timestamptz NOT NULL DEFAULT now(),
-    updated_at timestamptz,
-    CONSTRAINT unique_user_file UNIQUE (user_id, video_file_path)
+CREATE TABLE models (
+    id SERIAL PRIMARY KEY,
+    brand_id INTEGER NOT NULL REFERENCES brands(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(brand_id, name)
 );
 
--- Indices
-CREATE INDEX idx_videos_user_id ON files (user_id);
-CREATE INDEX idx_videos_status_id ON files (status_id);
+CREATE TABLE vehicles (
+    id SERIAL PRIMARY KEY,
+    model_id INTEGER NOT NULL REFERENCES models(id) ON DELETE CASCADE,
+    year INTEGER NOT NULL CHECK (year >= 1886 AND year <= EXTRACT(YEAR FROM CURRENT_DATE) + 1),
+    color VARCHAR(50) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK (price > 0),
+    status VARCHAR(20) DEFAULT 'available' CHECK (status IN ('available', 'sold', 'reserved')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    sold_at TIMESTAMP NULL
+);
 
--- clear tables
-TRUNCATE files, users, file_status RESTART IDENTITY CASCADE;
+-- Índices para otimização
+CREATE INDEX idx_vehicles_status ON vehicles(status);
+CREATE INDEX idx_vehicles_price ON vehicles(price);
+CREATE INDEX idx_vehicles_model_id ON vehicles(model_id);
 
--- Pre-populate status values
-INSERT INTO file_status (id, status) VALUES
-  (1, 'pendente'),
-  (2, 'em processamento'),
-  (3, 'processado'),
-  (4, 'erro');
 
--- Insert specific users
-INSERT INTO users (name, email, created_at, updated_at) VALUES
-     ('Hamilton', 'hfantin@gmail.com', '2025-06-10 08:00:00', null),
-     ('User', 'user@gmail.com', '2025-06-11 09:00:00', null);
+CREATE TABLE customers (
+    id SERIAL PRIMARY KEY,
+    auth_id VARCHAR(255) NOT NULL UNIQUE, -- ID do serviço externo de autenticação
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20) NULL,
+    address TEXT NULL,
+    type VARCHAR(20) DEFAULT 'buyer' CHECK (type IN ('buyer', 'seller', 'both')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Índices
+CREATE INDEX idx_customers_auth_id ON customers(auth_id);
+CREATE INDEX idx_customers_email ON customers(email);
+CREATE INDEX idx_customers_type ON customers(type);
+
+
+CREATE TABLE sales (
+    id SERIAL PRIMARY KEY,
+    customer_id INTEGER NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+    sale_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount > 0),
+    payment_method VARCHAR(50) NULL,
+    transaction_id VARCHAR(100) NULL, -- ID da transação do gateway de pagamento
+    status VARCHAR(20) DEFAULT 'completed' CHECK (status IN ('pending', 'completed', 'cancelled')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Índices
+CREATE INDEX idx_sales_customer_id ON sales(customer_id);
+CREATE INDEX idx_sales_date ON sales(sale_date);
+CREATE INDEX idx_sales_status ON sales(status);
+
+
+CREATE TABLE sale_vehicles (
+    id SERIAL PRIMARY KEY,
+    sale_id INTEGER NOT NULL REFERENCES sales(id) ON DELETE CASCADE,
+    vehicle_id INTEGER NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+    sale_price DECIMAL(10, 2) NOT NULL CHECK (sale_price > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(vehicle_id) -- Garante que um veículo só seja vendido uma vez
+);
+
+-- Índices
+CREATE INDEX idx_sale_vehicles_sale_id ON sale_vehicles(sale_id);
+CREATE INDEX idx_sale_vehicles_vehicle_id ON sale_vehicles(vehicle_id);
+
+-- limpar tabelas
+DELETE from brands;
+DELETE from models;
+DELETE from vehicles;
+
+-- popular as tabelas
+-- Marcas de veículos
+INSERT INTO brands (id, name) VALUES
+(1, 'Toyota'),
+(2, 'Volkswagen'),
+(3, 'Fiat'),
+(4, 'Chevrolet'),
+(5, 'Ford'),
+(6, 'Honda'),
+(7, 'Hyundai'),
+(8, 'Nissan'),
+(9, 'Renault'),
+(10, 'Jeep'),
+(11, 'BMW'),
+(12, 'Mercedes-Benz'),
+(13, 'Audi'),
+(14, 'Volvo'),
+(15, 'Mitsubishi');
+
+
+-- Modelos Toyota
+INSERT INTO models (brand_id, name) VALUES
+(1, 'Corolla'),
+(1, 'Hilux'),
+(1, 'RAV4'),
+(1, 'Yaris'),
+(1, 'Etios');
+
+-- Modelos Volkswagen
+INSERT INTO models (brand_id, name) VALUES
+(2, 'Gol'),
+(2, 'Polo'),
+(2, 'Virtus'),
+(2, 'T-Cross'),
+(2, 'Nivus');
+
+-- Modelos Fiat
+INSERT INTO models (brand_id, name) VALUES
+(3, 'Uno'),
+(3, 'Mobi'),
+(3, 'Argo'),
+(3, 'Cronos'),
+(3, 'Toro');
+
+-- Modelos Chevrolet
+INSERT INTO models (brand_id, name) VALUES
+(4, 'Onix'),
+(4, 'Tracker'),
+(4, 'S10'),
+(4, 'Cruze'),
+(4, 'Spin');
+
+-- Modelos Ford
+INSERT INTO models (brand_id, name) VALUES
+(5, 'Ranger'),
+(5, 'Ka'),
+(5, 'EcoSport'),
+(5, 'Focus'),
+(5, 'Fiesta');
+
+-- Modelos Honda
+INSERT INTO models (brand_id, name) VALUES
+(6, 'Civic'),
+(6, 'HR-V'),
+(6, 'Fit'),
+(6, 'City'),
+(6, 'WR-V');
+
+-- Modelos Hyundai
+INSERT INTO models (brand_id, name) VALUES
+(7, 'HB20'),
+(7, 'Creta'),
+(7, 'Tucson'),
+(7, 'i30'),
+(7, 'Santa Fé');
+
+-- Modelos Nissan
+INSERT INTO models (brand_id, name) VALUES
+(8, 'Kicks'),
+(8, 'Versa'),
+(8, 'March'),
+(8, 'Frontier'),
+(8, 'Sentra');
+
+-- Modelos Renault
+INSERT INTO models (brand_id, name) VALUES
+(9, 'Kwid'),
+(9, 'Sandero'),
+(9, 'Duster'),
+(9, 'Captur'),
+(9, 'Logan');
+
+-- Modelos Jeep
+INSERT INTO models (brand_id, name) VALUES
+(10, 'Renegade'),
+(10, 'Compass'),
+(10, 'Commander'),
+(10, 'Wrangler'),
+(10, 'Gladiator');
+
+-- Modelos BMW
+INSERT INTO models (brand_id, name) VALUES
+(11, 'Série 3'),
+(11, 'X1'),
+(11, 'X3'),
+(11, 'Série 5'),
+(11, 'X5');
+
+-- Modelos Mercedes-Benz
+INSERT INTO models (brand_id, name) VALUES
+(12, 'Classe A'),
+(12, 'Classe C'),
+(12, 'GLA'),
+(12, 'GLC'),
+(12, 'Classe E');
+
+-- Modelos Audi
+INSERT INTO models (brand_id, name) VALUES
+(13, 'A3'),
+(13, 'A4'),
+(13, 'Q3'),
+(13, 'Q5'),
+(13, 'A5');
+
+-- Modelos Volvo
+INSERT INTO models (brand_id, name) VALUES
+(14, 'XC40'),
+(14, 'XC60'),
+(14, 'XC90'),
+(14, 'S60'),
+(14, 'V60');
+
+-- Modelos Mitsubishi
+INSERT INTO models (brand_id, name) VALUES
+(15, 'L200'),
+(15, 'Outlander'),
+(15, 'Eclipse Cross'),
+(15, 'ASX'),
+(15, 'Pajero Sport');
+
+
+-- Veículos Toyota
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(1, 2023, 'Prata', 85000.00, 'available'),
+(1, 2022, 'Preto', 78000.00, 'available'),
+(2, 2023, 'Branco', 120000.00, 'available'),
+(3, 2022, 'Vermelho', 95000.00, 'sold'),
+(4, 2023, 'Azul', 65000.00, 'available');
+
+-- Veículos Volkswagen
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(6, 2023, 'Branco', 70000.00, 'available'),
+(7, 2022, 'Prata', 85000.00, 'available'),
+(8, 2023, 'Preto', 90000.00, 'sold'),
+(9, 2022, 'Cinza', 95000.00, 'available'),
+(10, 2023, 'Vermelho', 88000.00, 'available');
+
+-- Veículos Fiat
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(11, 2023, 'Verde', 45000.00, 'available'),
+(12, 2022, 'Branco', 40000.00, 'sold'),
+(13, 2023, 'Prata', 60000.00, 'available'),
+(14, 2022, 'Preto', 55000.00, 'available'),
+(15, 2023, 'Azul', 75000.00, 'available');
+
+-- Veículos Chevrolet
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(16, 2023, 'Branco', 65000.00, 'available'),
+(17, 2022, 'Prata', 85000.00, 'available'),
+(18, 2023, 'Preto', 120000.00, 'sold'),
+(19, 2022, 'Vermelho', 75000.00, 'available'),
+(20, 2023, 'Cinza', 50000.00, 'available');
+
+-- Veículos Ford
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(21, 2023, 'Azul', 110000.00, 'available'),
+(22, 2022, 'Branco', 45000.00, 'sold'),
+(23, 2023, 'Prata', 70000.00, 'available'),
+(24, 2022, 'Preto', 60000.00, 'available'),
+(25, 2023, 'Vermelho', 55000.00, 'available');
+
+-- Veículos Honda
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(26, 2023, 'Branco', 95000.00, 'available'),
+(27, 2022, 'Prata', 85000.00, 'available'),
+(28, 2023, 'Preto', 65000.00, 'sold'),
+(29, 2022, 'Azul', 70000.00, 'available'),
+(30, 2023, 'Vermelho', 75000.00, 'available');
+
+-- Veículos Hyundai
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(31, 2023, 'Cinza', 60000.00, 'available'),
+(32, 2022, 'Branco', 80000.00, 'available'),
+(33, 2023, 'Prata', 95000.00, 'sold'),
+(34, 2022, 'Preto', 55000.00, 'available'),
+(35, 2023, 'Azul', 110000.00, 'available');
+
+-- Veículos Nissan
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(36, 2023, 'Vermelho', 85000.00, 'available'),
+(37, 2022, 'Branco', 50000.00, 'available'),
+(38, 2023, 'Prata', 45000.00, 'sold'),
+(39, 2022, 'Preto', 90000.00, 'available'),
+(40, 2023, 'Azul', 75000.00, 'available');
+
+-- Veículos Renault
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(41, 2023, 'Amarelo', 40000.00, 'available'),
+(42, 2022, 'Branco', 45000.00, 'available'),
+(43, 2023, 'Prata', 70000.00, 'sold'),
+(44, 2022, 'Preto', 65000.00, 'available'),
+(45, 2023, 'Azul', 50000.00, 'available');
+
+-- Veículos Jeep
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(46, 2023, 'Verde', 90000.00, 'available'),
+(47, 2022, 'Branco', 110000.00, 'available'),
+(48, 2023, 'Prata', 130000.00, 'sold'),
+(49, 2022, 'Preto', 150000.00, 'available'),
+(50, 2023, 'Azul', 140000.00, 'available');
+
+-- Veículos BMW
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(51, 2023, 'Branco', 200000.00, 'available'),
+(52, 2022, 'Prata', 180000.00, 'available'),
+(53, 2023, 'Preto', 220000.00, 'sold'),
+(54, 2022, 'Azul', 250000.00, 'available'),
+(55, 2023, 'Cinza', 230000.00, 'available');
+
+-- Veículos Mercedes-Benz
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(56, 2023, 'Prata', 220000.00, 'available'),
+(57, 2022, 'Preto', 200000.00, 'available'),
+(58, 2023, 'Branco', 180000.00, 'sold'),
+(59, 2022, 'Azul', 240000.00, 'available'),
+(60, 2023, 'Cinza', 260000.00, 'available');
+
+-- Veículos Audi
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(61, 2023, 'Preto', 190000.00, 'available'),
+(62, 2022, 'Branco', 210000.00, 'available'),
+(63, 2023, 'Prata', 170000.00, 'sold'),
+(64, 2022, 'Azul', 230000.00, 'available'),
+(65, 2023, 'Cinza', 200000.00, 'available');
+
+-- Veículos Volvo
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(66, 2023, 'Azul', 180000.00, 'available'),
+(67, 2022, 'Branco', 200000.00, 'available'),
+(68, 2023, 'Prata', 250000.00, 'sold'),
+(69, 2022, 'Preto', 220000.00, 'available'),
+(70, 2023, 'Cinza', 190000.00, 'available');
+
+-- Veículos Mitsubishi
+INSERT INTO vehicles (model_id, year, color, price, status) VALUES
+(71, 2023, 'Branco', 120000.00, 'available'),
+(72, 2022, 'Prata', 110000.00, 'available'),
+(73, 2023, 'Preto', 100000.00, 'sold'),
+(74, 2022, 'Azul', 90000.00, 'available'),
+(75, 2023, 'Vermelho', 130000.00, 'available');

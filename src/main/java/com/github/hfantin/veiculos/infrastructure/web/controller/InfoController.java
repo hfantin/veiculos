@@ -1,0 +1,30 @@
+package com.github.hfantin.veiculos.infrastructure.web.controller;
+
+import com.github.hfantin.veiculos.domain.service.InfoService;
+import com.github.hfantin.veiculos.infrastructure.web.dto.AppInfoResponse;
+import com.github.hfantin.veiculos.infrastructure.web.mapper.AppInfoMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/info")
+public class InfoController {
+
+    private final InfoService infoService;
+    private final AppInfoMapper appInfoMapper;
+
+    public InfoController(InfoService infoService, AppInfoMapper appInfoMapper) {
+        this.infoService = infoService;
+        this.appInfoMapper = appInfoMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<AppInfoResponse> getApplicationInfo() {
+        var appInfo = infoService.getApplicationInfo();
+        var response = appInfoMapper.toResponse(appInfo);
+        return ResponseEntity.ok(response);
+    }
+
+ }

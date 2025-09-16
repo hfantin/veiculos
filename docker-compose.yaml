@@ -2,9 +2,9 @@ services:
   db:
     image: postgres:17-alpine
     environment:
-      - POSTGRES_USER=veiculos
-      - POSTGRES_PASSWORD=veiculos
-      - POSTGRES_DB=veiculos
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
