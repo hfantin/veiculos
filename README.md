@@ -41,7 +41,8 @@
 │   │   └── adapter/   
 │   ├── web/   
 │   │   ├── controller/   
-│   │   ├── dto/   
+│   │   ├── dto/
+│   │   ├── mapper/      
 │   │   └── config/   
 │   └── external/   
 └── shared/   
