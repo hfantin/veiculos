@@ -51,7 +51,7 @@
 
 
 ### endpoints 
-
+- http://localhost:8080/swagger-ui/index.html
 POST /api/brands - Criar nova marca
 
 GET /api/brands/{id} - Buscar marca por ID

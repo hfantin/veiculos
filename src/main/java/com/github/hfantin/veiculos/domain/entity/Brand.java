@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Brand {
-    private Long id;
+    private Integer id;
     private String name;
     private LocalDateTime createdAt;
 
@@ -15,15 +15,15 @@ public class Brand {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Brand(Long id, String name, LocalDateTime createdAt) {
+    public Brand(Integer id, String name, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
