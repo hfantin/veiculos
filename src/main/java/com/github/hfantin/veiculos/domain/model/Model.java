@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 public class Model {
-    private Long id;
-    private Long brandId;
+    private Integer id;
+    private Integer brandId;
     private String name;
     private LocalDateTime createdAt;
 
-    public Model(Long brandId, String name) {
+    public Model(Integer brandId, String name) {
         this.brandId = brandId;
         this.name = name;
         this.createdAt = LocalDateTime.now();

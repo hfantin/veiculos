@@ -1,9 +1,8 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.entity;
 
+import com.github.hfantin.veiculos.domain.model.enums.VehicleStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,18 +17,12 @@ import java.time.LocalDateTime;
 @ToString(exclude = {"model"})
 public class VehicleEntity {
 
-    public enum Status {
-        AVAILABLE, SOLD, RESERVED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "model_id", nullable = false)
-    @EqualsAndHashCode.Exclude
-    private ModelEntity model;
+    @Column(name = "model_id", nullable = false)
+    private Integer modelId;
 
     @Column(name = "year", nullable = false)
     private Integer year;
@@ -41,17 +34,33 @@ public class VehicleEntity {
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 20)
-    private Status status;
+    @Column(name = "status", nullable = false, length = 20)
+    private VehicleStatus status;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @Column(name = "sold_at")
     private LocalDateTime soldAt;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+        if (updatedAt == null) {
+            updatedAt = LocalDateTime.now();
+        }
+        if (status == null) {
+            status = VehicleStatus.AVAILABLE;
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

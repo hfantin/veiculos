@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ModelRepository {
-    Model save(Model brand);
-    Optional<Model> findById(Long id);
-    Optional<Model> findByName(String name);
+    Model save(Model model);
+    Optional<Model> findById(Integer id);
+    Optional<Model> findByBrandIdAndName(Integer brandId, String name);
+    List<Model> findByBrandId(Integer brandId);
     List<Model> findAll();
     List<Model> findAllOrderedByName();
-    boolean existsByName(String name);
-    boolean existsById(Long id);
-    boolean existsByBrandIdAndName(Long brandId, String name);
-    void deleteById(Long id);
+    boolean existsByBrandIdAndName(Integer brandId, String name);
+    boolean existsById(Integer id);
+    void deleteById(Integer id);
     long count();
 }
