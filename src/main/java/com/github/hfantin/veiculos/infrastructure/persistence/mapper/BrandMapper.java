@@ -1,6 +1,6 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.mapper;
 
-import com.github.hfantin.veiculos.domain.entity.Brand;
+import com.github.hfantin.veiculos.domain.model.Brand;
 import com.github.hfantin.veiculos.infrastructure.persistence.entity.BrandEntity;
 import org.springframework.stereotype.Component;
 

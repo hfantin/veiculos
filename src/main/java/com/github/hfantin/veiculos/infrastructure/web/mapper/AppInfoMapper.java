@@ -1,6 +1,6 @@
 package com.github.hfantin.veiculos.infrastructure.web.mapper;
 
-import com.github.hfantin.veiculos.domain.entity.AppInfo;
+import com.github.hfantin.veiculos.domain.model.AppInfo;
 import com.github.hfantin.veiculos.infrastructure.web.dto.AppInfoResponse;
 import org.springframework.stereotype.Component;
 

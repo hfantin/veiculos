@@ -1,4 +1,4 @@
-package com.github.hfantin.veiculos.domain.entity;
+package com.github.hfantin.veiculos.domain.model;
 
 public record AppInfo(
     String name,

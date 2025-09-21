@@ -1,4 +1,4 @@
-package com.github.hfantin.veiculos.domain.entity;
+package com.github.hfantin.veiculos.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
