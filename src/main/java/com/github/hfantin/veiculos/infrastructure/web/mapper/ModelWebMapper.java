@@ -17,11 +17,12 @@ public class ModelWebMapper {
     }
 
     public ModelResponse toResponse(Model model) {
-        return new ModelResponse(
-                model.getId(),
-                model.getBrandId(),
-                model.getName(),
-                model.getCreatedAt()
-        );
+        ModelResponse response = new ModelResponse();
+        response.setId(model.getId());
+        response.setBrandId(model.getBrandId());
+        response.setBrandName(model.getBrandName()); // Novo campo
+        response.setName(model.getName());
+        response.setCreatedAt(model.getCreatedAt());
+        return response;
     }
 }

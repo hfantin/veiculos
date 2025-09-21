@@ -16,14 +16,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"brand"})
 public class ModelEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "brand_id", nullable = false)
-    private Integer brandId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id", nullable = false, foreignKey = @ForeignKey(name = "fk_models_brand"))
+    private BrandEntity brand;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;

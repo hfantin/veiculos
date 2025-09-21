@@ -15,13 +15,14 @@ import java.time.LocalDateTime;
 @Schema(description = "DTO de resposta para operações com modelos")
 public class ModelResponse {
 
-
-
     @Schema(description = "ID único do modelo", example = "1")
     private Integer id;
 
     @Schema(description = "ID da marca do modelo", example = "1")
     private Integer brandId;
+
+    @Schema(description = "Nome da marca", example = "Toyota") // Novo campo
+    private String brandName;
 
     @Schema(description = "Nome do modelo", example = "Corolla")
     private String name;

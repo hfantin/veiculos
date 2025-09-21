@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class Model {
     private Integer id;
     private Integer brandId;
+    private String brandName; // Novo campo
     private String name;
     private LocalDateTime createdAt;
 

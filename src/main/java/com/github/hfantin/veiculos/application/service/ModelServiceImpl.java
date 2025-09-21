@@ -97,4 +97,29 @@ public class ModelServiceImpl implements ModelService {
     public long countModels() {
         return modelRepository.count();
     }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Model> getModelByIdWithBrand(Integer id) {
+        return modelRepository.findByIdWithBrand(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Model> getModelsByBrandIdWithBrand(Integer brandId) {
+        return modelRepository.findByBrandIdWithBrand(brandId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Model> getAllModelsWithBrand() {
+        return modelRepository.findAllWithBrand();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Model> getAllModelsOrderedByNameWithBrand() {
+        return modelRepository.findAllOrderedByNameWithBrand();
+    }
 }
