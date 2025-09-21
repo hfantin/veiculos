@@ -50,22 +50,8 @@
 ```
 
 
-### endpoints 
-- http://localhost:8080/swagger-ui/index.html
-POST /api/brands - Criar nova marca
+### API 
+- [swagger](http://localhost:8080/swagger-ui/index.html)
 
-GET /api/brands/{id} - Buscar marca por ID
-
-GET /api/brands/name/{name} - Buscar marca por nome
-
-GET /api/brands - Listar todas as marcas
-
-GET /api/brands?ordered=true - Listar marcas ordenadas por nome
-
-PUT /api/brands/{id} - Atualizar marca
-
-DELETE /api/brands/{id} - Deletar marca
-
-GET /api/brands/count - Contar total de marcas
-
-GET /api/brands/exists/{name} - Verificar se marca existe
+### LINKS
+- auth0 - https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization

@@ -9,9 +9,9 @@ public class AppInfoMapper {
 
     public AppInfoResponse toResponse(AppInfo appInfo) {
         return new AppInfoResponse(
-                appInfo.getName(),
-                appInfo.getVersion(),
-                appInfo.getDescription()
+                appInfo.name(),
+                appInfo.version(),
+                appInfo.description()
         );
     }
 }

@@ -3,29 +3,30 @@ DELETE from brands;
 DELETE from models;
 DELETE from vehicles;
 
--- popular as tabelas
--- Marcas de veículos
-INSERT INTO brands (id, name) VALUES
-(1, 'Toyota'),
-(2, 'Volkswagen'),
-(3, 'Fiat'),
-(4, 'Chevrolet'),
-(5, 'Ford'),
-(6, 'Honda'),
-(7, 'Hyundai'),
-(8, 'Nissan'),
-(9, 'Renault'),
-(10, 'Jeep'),
-(11, 'BMW'),
-(12, 'Mercedes-Benz'),
-(13, 'Audi'),
-(14, 'Volvo'),
-(15, 'Mitsubishi');
+-- reinicia sequenciais
+ ALTER SEQUENCE brands_id_seq RESTART;
+ ALTER SEQUENCE models_id_seq RESTART;
+ ALTER SEQUENCE vehicles_id_seq RESTART;
 
--- Atualizar a sequence para o próximo valor disponível
-SELECT setval('brands_id_seq', (SELECT COALESCE(MAX(id), 0) + 1 FROM brands));
+-- popular as tabelas marcas de veículos
+INSERT INTO brands (name) VALUES
+('Toyota'),
+('Volkswagen'),
+('Fiat'),
+('Chevrolet'),
+('Ford'),
+('Honda'),
+('Hyundai'),
+('Nissan'),
+('Renault'),
+('Jeep'),
+('BMW'),
+('Mercedes-Benz'),
+('Audi'),
+('Volvo'),
+('Mitsubishi');
 
-
+-- incluir modelos de veiculos
 -- Modelos Toyota
 INSERT INTO models (brand_id, name) VALUES
 (1, 'Corolla'),
@@ -146,7 +147,7 @@ INSERT INTO models (brand_id, name) VALUES
 (15, 'ASX'),
 (15, 'Pajero Sport');
 
-
+-- incluir veiculos
 -- Veículos Toyota
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
 (1, 2023, 'Prata', 85000.00, 'available'),

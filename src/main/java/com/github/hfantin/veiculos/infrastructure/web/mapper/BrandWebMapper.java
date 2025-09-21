@@ -10,7 +10,7 @@ public class BrandWebMapper {
 
     public Brand toDomain(BrandRequest request) {
         Brand brand = new Brand();
-        brand.setName(request.getName());
+        brand.setName(request.name());
         return brand;
     }
 
