@@ -21,4 +21,16 @@ public class Model {
         this.name = name;
         this.createdAt = LocalDateTime.now();
     }
+
+    public void validate() {
+        if (brandId == null) {
+            throw new IllegalArgumentException("Brand ID cannot be null");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Model name cannot be null or empty");
+        }
+        if (name.length() > 100) {
+            throw new IllegalArgumentException("Model name cannot exceed 100 characters");
+        }
+    }
 }

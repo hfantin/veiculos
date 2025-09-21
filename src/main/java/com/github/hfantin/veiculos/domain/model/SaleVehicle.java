@@ -12,16 +12,28 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 public class SaleVehicle {
-    private Long id;
-    private Long saleId;
-    private Long vehicleId;
+    private Integer id;
+    private Integer saleId;
+    private Integer vehicleId;
     private BigDecimal salePrice;
     private LocalDateTime createdAt;
 
-    public SaleVehicle(Long saleId, Long vehicleId, BigDecimal salePrice) {
+    public SaleVehicle(Integer saleId, Integer vehicleId, BigDecimal salePrice) {
         this.saleId = saleId;
         this.vehicleId = vehicleId;
         this.salePrice = salePrice;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void validate() {
+        if (saleId == null) {
+            throw new IllegalArgumentException("Sale ID cannot be null");
+        }
+        if (vehicleId == null) {
+            throw new IllegalArgumentException("Vehicle ID cannot be null");
+        }
+        if (salePrice == null || salePrice.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Sale price must be greater than 0");
+        }
     }
 }
