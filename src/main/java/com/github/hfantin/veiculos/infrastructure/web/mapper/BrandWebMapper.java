@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 public class BrandWebMapper {
 
     public Brand toDomain(BrandRequest request) {
-        Brand brand = new Brand();
-        brand.setName(request.name());
-        return brand;
+        return Brand.builder().name(request.name()).build();
     }
 
     public BrandResponse toResponse(Brand brand) {

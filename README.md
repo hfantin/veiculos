@@ -50,7 +50,7 @@
 ```
 
 
-- nova estrutura:]
+- nova estrutura:
 ```
 src/
 ├── main/
