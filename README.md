@@ -26,7 +26,7 @@
 ```
 ├── config/   
 ├── domain/   
-│   ├── entity/   
+│   ├── model/   
 │   ├── exception/   
 │   ├── repository/  
 │   └── service/   
@@ -47,6 +47,34 @@
 │   └── external/   
 └── shared/   
 └── util/   
+```
+
+
+- nova estrutura:]
+```
+src/
+├── main/
+│   ├── java/com/example/
+│   │   ├── domain/
+│   │   │   ├── model/
+│   │   │   ├── repository/
+│   │   │   └── service/
+│   │   ├── application/
+│   │   │   ├── dto/
+│   │   │   ├── mapper/
+│   │   │   └── service/
+│   │   ├── infrastructure/
+│   │   │   ├── config/
+│   │   │   ├── persistence/
+│   │   │   │   ├── entity/
+│   │   │   │   └── repository/
+│   │   │   └── rest/
+│   │   │       └── controller/
+│   │   └── presentation/
+│   │       └── dto/
+│   └── resources/
+└── test/
+
 ```
 
 

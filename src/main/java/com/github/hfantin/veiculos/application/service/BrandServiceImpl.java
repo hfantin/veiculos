@@ -1,6 +1,6 @@
 package com.github.hfantin.veiculos.application.service;
 
-import com.github.hfantin.veiculos.domain.entity.Brand;
+import com.github.hfantin.veiculos.domain.model.Brand;
 import com.github.hfantin.veiculos.domain.repository.BrandRepository;
 import com.github.hfantin.veiculos.domain.service.BrandService;
 import org.springframework.stereotype.Service;

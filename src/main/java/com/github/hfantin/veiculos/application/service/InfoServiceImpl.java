@@ -1,7 +1,7 @@
 package com.github.hfantin.veiculos.application.service;
 
 import com.github.hfantin.veiculos.config.AppConfig;
-import com.github.hfantin.veiculos.domain.entity.AppInfo;
+import com.github.hfantin.veiculos.domain.model.AppInfo;
 import com.github.hfantin.veiculos.domain.service.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

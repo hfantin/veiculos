@@ -1,6 +1,6 @@
 package com.github.hfantin.veiculos.domain.service;
 
-import com.github.hfantin.veiculos.domain.entity.Brand;
+import com.github.hfantin.veiculos.domain.model.Brand;
 
 import java.util.List;
 import java.util.Optional;
