@@ -21,6 +21,9 @@ public class VehicleWebMapper {
         VehicleResponse response = new VehicleResponse();
         response.setId(vehicle.getId());
         response.setModelId(vehicle.getModelId());
+        response.setModelName(vehicle.getModelName());
+        response.setBrandId(vehicle.getBrandId());
+        response.setBrandName(vehicle.getBrandName());
         response.setYear(vehicle.getYear());
         response.setColor(vehicle.getColor());
         response.setPrice(vehicle.getPrice());

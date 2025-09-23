@@ -12,7 +12,7 @@ public interface ModelService {
     List<Model> getModelsByBrandId(Integer brandId);
     List<Model> getAllModels();
     List<Model> getAllModelsOrderedByName();
-    boolean modelExists(Integer brandId, String name);
     void deleteModel(Integer id);
+    boolean modelExists(Integer brandId, String name);
     long countModels();
 }

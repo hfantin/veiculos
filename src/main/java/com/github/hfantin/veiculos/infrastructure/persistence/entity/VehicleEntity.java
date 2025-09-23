@@ -21,8 +21,9 @@ public class VehicleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "model_id", nullable = false)
-    private Integer modelId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "model_id", nullable = false, foreignKey = @ForeignKey(name = "fk_vehicles_model"))
+    private ModelEntity model;
 
     @Column(name = "year", nullable = false)
     private Integer year;

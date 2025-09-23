@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
     year INTEGER NOT NULL CHECK (year >= 1886 AND year <= EXTRACT(YEAR FROM CURRENT_DATE) + 1),
     color VARCHAR(50) NOT NULL,
     price DECIMAL(10, 2) NOT NULL CHECK (price > 0),
-    status VARCHAR(20) DEFAULT 'available' CHECK (status IN ('available', 'sold', 'reserved')),
+    status VARCHAR(20) DEFAULT 'AVAILABLE', -- CHECK (status IN ('AVAILABLE', 'SOLD', 'RESERVED')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     sold_at TIMESTAMP NULL
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS customers (
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20) NULL,
     address TEXT NULL,
-    type VARCHAR(20) DEFAULT 'buyer' CHECK (type IN ('buyer', 'seller', 'both')),
+    type VARCHAR(20) DEFAULT 'BUYER' CHECK (type IN ('BUYER', 'SELLER', 'BOTH')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS sales (
     total_amount DECIMAL(10, 2) NOT NULL CHECK (total_amount > 0),
     payment_method VARCHAR(50) NULL,
     transaction_id VARCHAR(100) NULL, -- ID da transação do gateway de pagamento
-    status VARCHAR(20) DEFAULT 'completed' CHECK (status IN ('pending', 'completed', 'cancelled')),
+    status VARCHAR(20) DEFAULT 'COMPLETED' CHECK (status IN ('PENDING', 'COMPLETED', 'CANCELLED')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -79,3 +79,4 @@ CREATE TABLE IF NOT EXISTS sale_vehicles (
 -- Índices
 CREATE INDEX IF NOT EXISTS idx_sale_vehicles_sale_id ON sale_vehicles(sale_id);
 CREATE INDEX IF NOT EXISTS idx_sale_vehicles_vehicle_id ON sale_vehicles(vehicle_id);
+

@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface BrandRepository {
     Brand save(Brand brand);
-    Optional<Brand> findById(Long id);
+    Optional<Brand> findById(Integer id);
     Optional<Brand> findByName(String name);
     List<Brand> findAll();
     List<Brand> findAllOrderedByName();
+    void deleteById(Integer id);
     boolean existsByName(String name);
-    boolean existsById(Long id);
-    void deleteById(Long id);
+    boolean existsById(Integer id);
     long count();
 }

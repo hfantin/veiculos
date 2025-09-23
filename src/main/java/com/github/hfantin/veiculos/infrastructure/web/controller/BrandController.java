@@ -49,7 +49,7 @@ public class BrandController {
             @ApiResponse(responseCode = "200", description = "Marca encontrada"),
             @ApiResponse(responseCode = "404", description = "Marca não encontrada")
     })
-    public ResponseEntity<BrandResponse> getBrandById(@PathVariable Long id) {
+    public ResponseEntity<BrandResponse> getBrandById(@PathVariable Integer id) {
         return brandService.getBrandById(id)
                 .map(brand -> ResponseEntity.ok(brandWebMapper.toResponse(brand)))
                 .orElse(ResponseEntity.notFound().build());
@@ -94,7 +94,7 @@ public class BrandController {
             @ApiResponse(responseCode = "404", description = "Marca não encontrado")
     })
     public ResponseEntity<BrandResponse> updateBrand(
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Valid @RequestBody BrandRequest request) {
 
         var brand = brandWebMapper.toDomain(request);
@@ -108,7 +108,7 @@ public class BrandController {
             @ApiResponse(responseCode = "204", description = "Marca deletada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Marca não encontrado")
     })
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBrand(@PathVariable Integer id) {
         brandService.deleteBrand(id);
         return ResponseEntity.noContent().build();
     }

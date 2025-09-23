@@ -84,7 +84,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional(readOnly = true)
     public List<Model> getAllModels() {
-        return modelRepository.findAllWithBrand();
+        return modelRepository.findAll();
     }
 
     @Override

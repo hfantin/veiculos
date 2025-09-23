@@ -19,6 +19,15 @@ public class VehicleResponse {
     @Schema(description = "ID do modelo do veículo", example = "1")
     private Integer modelId;
 
+    @Schema(description = "Nome do modelo", example = "Corolla")
+    private String modelName;
+
+    @Schema(description = "ID da marca", example = "1")
+    private Integer brandId;
+
+    @Schema(description = "Nome da marca", example = "Toyota")
+    private String brandName;
+
     @Schema(description = "Ano do veículo", example = "2023")
     private Integer year;
 

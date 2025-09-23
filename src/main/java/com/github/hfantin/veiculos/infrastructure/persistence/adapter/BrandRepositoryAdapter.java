@@ -30,7 +30,7 @@ public class BrandRepositoryAdapter implements BrandRepository {
     }
 
     @Override
-    public Optional<Brand> findById(Long id) {
+    public Optional<Brand> findById(Integer id) {
         return brandJpaRepository.findById(id)
                 .map(brandMapper::toDomain);
     }
@@ -61,12 +61,12 @@ public class BrandRepositoryAdapter implements BrandRepository {
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public boolean existsById(Integer id) {
         return brandJpaRepository.existsById(id);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         brandJpaRepository.deleteById(id);
     }
 
