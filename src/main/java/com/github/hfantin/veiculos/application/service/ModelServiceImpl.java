@@ -50,36 +50,6 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Model> getModelById(Integer id) {
-        return modelRepository.findById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Model> getModelByBrandIdAndName(Integer brandId, String name) {
-        return modelRepository.findByBrandIdAndName(brandId, name);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Model> getModelsByBrandId(Integer brandId) {
-        return modelRepository.findByBrandId(brandId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Model> getAllModels() {
-        return modelRepository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Model> getAllModelsOrderedByName() {
-        return modelRepository.findAllOrderedByName();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public boolean modelExists(Integer brandId, String name) {
         return modelRepository.existsByBrandIdAndName(brandId, name);
     }
@@ -101,25 +71,25 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Model> getModelByIdWithBrand(Integer id) {
-        return modelRepository.findByIdWithBrand(id);
+    public Optional<Model> getModelById(Integer id) {
+        return modelRepository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Model> getModelsByBrandIdWithBrand(Integer brandId) {
-        return modelRepository.findByBrandIdWithBrand(brandId);
+    public List<Model> getModelsByBrandId(Integer brandId) {
+        return modelRepository.findByBrandId(brandId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Model> getAllModelsWithBrand() {
+    public List<Model> getAllModels() {
         return modelRepository.findAllWithBrand();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Model> getAllModelsOrderedByNameWithBrand() {
-        return modelRepository.findAllOrderedByNameWithBrand();
+    public List<Model> getAllModelsOrderedByName() {
+        return modelRepository.findAllOrderedByName();
     }
 }

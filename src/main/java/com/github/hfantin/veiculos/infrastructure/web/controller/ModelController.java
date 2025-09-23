@@ -50,54 +50,6 @@ public class ModelController {
                 .body(modelWebMapper.toResponse(createdModel));
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Buscar modelo por ID", description = "Retorna os detalhes de um modelo específico pelo seu ID")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Modelo encontrado"),
-            @ApiResponse(responseCode = "404", description = "Modelo não encontrado")
-    })
-    public ResponseEntity<ModelResponse> getModelById(
-            @Parameter(description = "ID do modelo", example = "1", required = true)
-            @PathVariable Integer id) {
-
-        return modelService.getModelById(id)
-                .map(model -> ResponseEntity.ok(modelWebMapper.toResponse(model)))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/brand/{brandId}")
-    @Operation(summary = "Buscar modelos por marca", description = "Retorna todos os modelos de uma marca específica")
-    @ApiResponse(responseCode = "200", description = "Modelos encontrados")
-    public ResponseEntity<List<ModelResponse>> getModelsByBrandId(
-            @Parameter(description = "ID da marca", example = "1", required = true)
-            @PathVariable Integer brandId) {
-
-        var models = modelService.getModelsByBrandId(brandId).stream()
-                .map(modelWebMapper::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(models);
-    }
-
-    @GetMapping
-    @Operation(summary = "Listar todos os modelos", description = "Retorna uma lista de todos os modelos cadastrados")
-    public ResponseEntity<List<ModelResponse>> getAllModels(
-            @Parameter(description = "Ordenar resultados por nome", example = "false")
-            @RequestParam(defaultValue = "false") boolean ordered) {
-
-        List<ModelResponse> models;
-        if (ordered) {
-            models = modelService.getAllModelsOrderedByName().stream()
-                    .map(modelWebMapper::toResponse)
-                    .collect(Collectors.toList());
-        } else {
-            models = modelService.getAllModels().stream()
-                    .map(modelWebMapper::toResponse)
-                    .collect(Collectors.toList());
-        }
-
-        return ResponseEntity.ok(models);
-    }
-
     @GetMapping("/exists")
     @Operation(summary = "Verificar existência de modelo", description = "Verifica se um modelo com o nome especificado já existe para uma marca")
     public ResponseEntity<Boolean> modelExists(
@@ -153,8 +105,8 @@ public class ModelController {
         return ResponseEntity.ok(modelService.countModels());
     }
 
-    @GetMapping("/{id}/with-brand")
-    @Operation(summary = "Buscar modelo por ID com nome da marca", description = "Retorna os detalhes de um modelo específico incluindo o nome da marca")
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar modelo por ID", description = "Retorna os detalhes de um modelo específico pelo seu ID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Modelo encontrado"),
             @ApiResponse(responseCode = "404", description = "Modelo não encontrado")
@@ -163,37 +115,37 @@ public class ModelController {
             @Parameter(description = "ID do modelo", example = "1", required = true)
             @PathVariable Integer id) {
 
-        return modelService.getModelByIdWithBrand(id)
+        return modelService.getModelById(id)
                 .map(model -> ResponseEntity.ok(modelWebMapper.toResponse(model)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/brand/{brandId}/with-brand")
-    @Operation(summary = "Buscar modelos por marca com nome da marca", description = "Retorna todos os modelos de uma marca específica incluindo o nome da marca")
+    @GetMapping("/brand/{brandId}")
+    @Operation(summary = "Buscar modelos por marca", description = "Retorna todos os modelos de uma marca específica")
     @ApiResponse(responseCode = "200", description = "Modelos encontrados")
     public ResponseEntity<List<ModelResponse>> getModelsByBrandIdWithBrand(
             @Parameter(description = "ID da marca", example = "1", required = true)
             @PathVariable Integer brandId) {
 
-        var models = modelService.getModelsByBrandIdWithBrand(brandId).stream()
+        var models = modelService.getModelsByBrandId(brandId).stream()
                 .map(modelWebMapper::toResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(models);
     }
 
-    @GetMapping("/with-brand")
-    @Operation(summary = "Listar todos os modelos com nome da marca", description = "Retorna uma lista de todos os modelos cadastrados incluindo o nome da marca")
+    @GetMapping
+    @Operation(summary = "Listar todos os modelos", description = "Retorna uma lista de todos os modelos cadastrados")
     public ResponseEntity<List<ModelResponse>> getAllModelsWithBrand(
             @Parameter(description = "Ordenar resultados por nome", example = "false")
             @RequestParam(defaultValue = "false") boolean ordered) {
 
         List<ModelResponse> models;
         if (ordered) {
-            models = modelService.getAllModelsOrderedByNameWithBrand().stream()
+            models = modelService.getAllModelsOrderedByName().stream()
                     .map(modelWebMapper::toResponse)
                     .collect(Collectors.toList());
         } else {
-            models = modelService.getAllModelsWithBrand().stream()
+            models = modelService.getAllModels().stream()
                     .map(modelWebMapper::toResponse)
                     .collect(Collectors.toList());
         }

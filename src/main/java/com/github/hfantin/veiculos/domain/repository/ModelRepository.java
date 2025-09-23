@@ -8,14 +8,9 @@ import java.util.Optional;
 public interface ModelRepository {
     Model save(Model model);
     Optional<Model> findById(Integer id);
-    Optional<Model> findByIdWithBrand(Integer id); // Novo método
-    Optional<Model> findByBrandIdAndName(Integer brandId, String name);
     List<Model> findByBrandId(Integer brandId);
-    List<Model> findByBrandIdWithBrand(Integer brandId); // Novo método
-    List<Model> findAll();
-    List<Model> findAllWithBrand(); // Novo método
+    List<Model> findAllWithBrand();
     List<Model> findAllOrderedByName();
-    List<Model> findAllOrderedByNameWithBrand(); // Novo método
     boolean existsByBrandIdAndName(Integer brandId, String name);
     boolean existsById(Integer id);
     void deleteById(Integer id);
