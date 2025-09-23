@@ -150,120 +150,120 @@ INSERT INTO models (brand_id, name) VALUES
 -- incluir veiculos
 -- Veículos Toyota
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(1, 2023, 'Prata', 85000.00, 'available'),
-(1, 2022, 'Preto', 78000.00, 'available'),
-(2, 2023, 'Branco', 120000.00, 'available'),
-(3, 2022, 'Vermelho', 95000.00, 'sold'),
-(4, 2023, 'Azul', 65000.00, 'available');
+(1, 2023, 'Prata', 85000.00, 'AVAILABLE'),
+(1, 2022, 'Preto', 78000.00, 'AVAILABLE'),
+(2, 2023, 'Branco', 120000.00, 'AVAILABLE'),
+(3, 2022, 'Vermelho', 95000.00, 'SOLD'),
+(4, 2023, 'Azul', 65000.00, 'AVAILABLE');
 
 -- Veículos Volkswagen
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(6, 2023, 'Branco', 70000.00, 'available'),
-(7, 2022, 'Prata', 85000.00, 'available'),
-(8, 2023, 'Preto', 90000.00, 'sold'),
-(9, 2022, 'Cinza', 95000.00, 'available'),
-(10, 2023, 'Vermelho', 88000.00, 'available');
+(6, 2023, 'Branco', 70000.00, 'AVAILABLE'),
+(7, 2022, 'Prata', 85000.00, 'AVAILABLE'),
+(8, 2023, 'Preto', 90000.00, 'SOLD'),
+(9, 2022, 'Cinza', 95000.00, 'AVAILABLE'),
+(10, 2023, 'Vermelho', 88000.00, 'AVAILABLE');
 
 -- Veículos Fiat
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(11, 2023, 'Verde', 45000.00, 'available'),
-(12, 2022, 'Branco', 40000.00, 'sold'),
-(13, 2023, 'Prata', 60000.00, 'available'),
-(14, 2022, 'Preto', 55000.00, 'available'),
-(15, 2023, 'Azul', 75000.00, 'available');
+(11, 2023, 'Verde', 45000.00, 'AVAILABLE'),
+(12, 2022, 'Branco', 40000.00, 'SOLD'),
+(13, 2023, 'Prata', 60000.00, 'AVAILABLE'),
+(14, 2022, 'Preto', 55000.00, 'AVAILABLE'),
+(15, 2023, 'Azul', 75000.00, 'AVAILABLE');
 
 -- Veículos Chevrolet
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(16, 2023, 'Branco', 65000.00, 'available'),
-(17, 2022, 'Prata', 85000.00, 'available'),
-(18, 2023, 'Preto', 120000.00, 'sold'),
-(19, 2022, 'Vermelho', 75000.00, 'available'),
-(20, 2023, 'Cinza', 50000.00, 'available');
+(16, 2023, 'Branco', 65000.00, 'AVAILABLE'),
+(17, 2022, 'Prata', 85000.00, 'AVAILABLE'),
+(18, 2023, 'Preto', 120000.00, 'SOLD'),
+(19, 2022, 'Vermelho', 75000.00, 'AVAILABLE'),
+(20, 2023, 'Cinza', 50000.00, 'AVAILABLE');
 
 -- Veículos Ford
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(21, 2023, 'Azul', 110000.00, 'available'),
-(22, 2022, 'Branco', 45000.00, 'sold'),
-(23, 2023, 'Prata', 70000.00, 'available'),
-(24, 2022, 'Preto', 60000.00, 'available'),
-(25, 2023, 'Vermelho', 55000.00, 'available');
+(21, 2023, 'Azul', 110000.00, 'AVAILABLE'),
+(22, 2022, 'Branco', 45000.00, 'SOLD'),
+(23, 2023, 'Prata', 70000.00, 'AVAILABLE'),
+(24, 2022, 'Preto', 60000.00, 'AVAILABLE'),
+(25, 2023, 'Vermelho', 55000.00, 'AVAILABLE');
 
 -- Veículos Honda
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(26, 2023, 'Branco', 95000.00, 'available'),
-(27, 2022, 'Prata', 85000.00, 'available'),
-(28, 2023, 'Preto', 65000.00, 'sold'),
-(29, 2022, 'Azul', 70000.00, 'available'),
-(30, 2023, 'Vermelho', 75000.00, 'available');
+(26, 2023, 'Branco', 95000.00, 'AVAILABLE'),
+(27, 2022, 'Prata', 85000.00, 'AVAILABLE'),
+(28, 2023, 'Preto', 65000.00, 'SOLD'),
+(29, 2022, 'Azul', 70000.00, 'AVAILABLE'),
+(30, 2023, 'Vermelho', 75000.00, 'AVAILABLE');
 
 -- Veículos Hyundai
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(31, 2023, 'Cinza', 60000.00, 'available'),
-(32, 2022, 'Branco', 80000.00, 'available'),
-(33, 2023, 'Prata', 95000.00, 'sold'),
-(34, 2022, 'Preto', 55000.00, 'available'),
-(35, 2023, 'Azul', 110000.00, 'available');
+(31, 2023, 'Cinza', 60000.00, 'AVAILABLE'),
+(32, 2022, 'Branco', 80000.00, 'AVAILABLE'),
+(33, 2023, 'Prata', 95000.00, 'SOLD'),
+(34, 2022, 'Preto', 55000.00, 'AVAILABLE'),
+(35, 2023, 'Azul', 110000.00, 'AVAILABLE');
 
 -- Veículos Nissan
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(36, 2023, 'Vermelho', 85000.00, 'available'),
-(37, 2022, 'Branco', 50000.00, 'available'),
-(38, 2023, 'Prata', 45000.00, 'sold'),
-(39, 2022, 'Preto', 90000.00, 'available'),
-(40, 2023, 'Azul', 75000.00, 'available');
+(36, 2023, 'Vermelho', 85000.00, 'AVAILABLE'),
+(37, 2022, 'Branco', 50000.00, 'AVAILABLE'),
+(38, 2023, 'Prata', 45000.00, 'SOLD'),
+(39, 2022, 'Preto', 90000.00, 'AVAILABLE'),
+(40, 2023, 'Azul', 75000.00, 'AVAILABLE');
 
 -- Veículos Renault
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(41, 2023, 'Amarelo', 40000.00, 'available'),
-(42, 2022, 'Branco', 45000.00, 'available'),
-(43, 2023, 'Prata', 70000.00, 'sold'),
-(44, 2022, 'Preto', 65000.00, 'available'),
-(45, 2023, 'Azul', 50000.00, 'available');
+(41, 2023, 'Amarelo', 40000.00, 'AVAILABLE'),
+(42, 2022, 'Branco', 45000.00, 'AVAILABLE'),
+(43, 2023, 'Prata', 70000.00, 'SOLD'),
+(44, 2022, 'Preto', 65000.00, 'AVAILABLE'),
+(45, 2023, 'Azul', 50000.00, 'AVAILABLE');
 
 -- Veículos Jeep
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(46, 2023, 'Verde', 90000.00, 'available'),
-(47, 2022, 'Branco', 110000.00, 'available'),
-(48, 2023, 'Prata', 130000.00, 'sold'),
-(49, 2022, 'Preto', 150000.00, 'available'),
-(50, 2023, 'Azul', 140000.00, 'available');
+(46, 2023, 'Verde', 90000.00, 'AVAILABLE'),
+(47, 2022, 'Branco', 110000.00, 'AVAILABLE'),
+(48, 2023, 'Prata', 130000.00, 'SOLD'),
+(49, 2022, 'Preto', 150000.00, 'AVAILABLE'),
+(50, 2023, 'Azul', 140000.00, 'AVAILABLE');
 
 -- Veículos BMW
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(51, 2023, 'Branco', 200000.00, 'available'),
-(52, 2022, 'Prata', 180000.00, 'available'),
-(53, 2023, 'Preto', 220000.00, 'sold'),
-(54, 2022, 'Azul', 250000.00, 'available'),
-(55, 2023, 'Cinza', 230000.00, 'available');
+(51, 2023, 'Branco', 200000.00, 'AVAILABLE'),
+(52, 2022, 'Prata', 180000.00, 'AVAILABLE'),
+(53, 2023, 'Preto', 220000.00, 'SOLD'),
+(54, 2022, 'Azul', 250000.00, 'AVAILABLE'),
+(55, 2023, 'Cinza', 230000.00, 'AVAILABLE');
 
 -- Veículos Mercedes-Benz
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(56, 2023, 'Prata', 220000.00, 'available'),
-(57, 2022, 'Preto', 200000.00, 'available'),
-(58, 2023, 'Branco', 180000.00, 'sold'),
-(59, 2022, 'Azul', 240000.00, 'available'),
-(60, 2023, 'Cinza', 260000.00, 'available');
+(56, 2023, 'Prata', 220000.00, 'AVAILABLE'),
+(57, 2022, 'Preto', 200000.00, 'AVAILABLE'),
+(58, 2023, 'Branco', 180000.00, 'SOLD'),
+(59, 2022, 'Azul', 240000.00, 'AVAILABLE'),
+(60, 2023, 'Cinza', 260000.00, 'AVAILABLE');
 
 -- Veículos Audi
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(61, 2023, 'Preto', 190000.00, 'available'),
-(62, 2022, 'Branco', 210000.00, 'available'),
-(63, 2023, 'Prata', 170000.00, 'sold'),
-(64, 2022, 'Azul', 230000.00, 'available'),
-(65, 2023, 'Cinza', 200000.00, 'available');
+(61, 2023, 'Preto', 190000.00, 'AVAILABLE'),
+(62, 2022, 'Branco', 210000.00, 'AVAILABLE'),
+(63, 2023, 'Prata', 170000.00, 'SOLD'),
+(64, 2022, 'Azul', 230000.00, 'AVAILABLE'),
+(65, 2023, 'Cinza', 200000.00, 'AVAILABLE');
 
 -- Veículos Volvo
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(66, 2023, 'Azul', 180000.00, 'available'),
-(67, 2022, 'Branco', 200000.00, 'available'),
-(68, 2023, 'Prata', 250000.00, 'sold'),
-(69, 2022, 'Preto', 220000.00, 'available'),
-(70, 2023, 'Cinza', 190000.00, 'available');
+(66, 2023, 'Azul', 180000.00, 'AVAILABLE'),
+(67, 2022, 'Branco', 200000.00, 'AVAILABLE'),
+(68, 2023, 'Prata', 250000.00, 'SOLD'),
+(69, 2022, 'Preto', 220000.00, 'AVAILABLE'),
+(70, 2023, 'Cinza', 190000.00, 'AVAILABLE');
 
 -- Veículos Mitsubishi
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(71, 2023, 'Branco', 120000.00, 'available'),
-(72, 2022, 'Prata', 110000.00, 'available'),
-(73, 2023, 'Preto', 100000.00, 'sold'),
-(74, 2022, 'Azul', 90000.00, 'available'),
-(75, 2023, 'Vermelho', 130000.00, 'available');
+(71, 2023, 'Branco', 120000.00, 'AVAILABLE'),
+(72, 2022, 'Prata', 110000.00, 'AVAILABLE'),
+(73, 2023, 'Preto', 100000.00, 'SOLD'),
+(74, 2022, 'Azul', 90000.00, 'AVAILABLE'),
+(75, 2023, 'Vermelho', 130000.00, 'AVAILABLE');

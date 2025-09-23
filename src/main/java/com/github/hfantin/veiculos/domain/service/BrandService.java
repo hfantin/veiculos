@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface BrandService {
     Brand createBrand(Brand brand);
-    Brand updateBrand(Long id, Brand brand);
-    Optional<Brand> getBrandById(Long id);
+    Brand updateBrand(Integer id, Brand brand);
+    Optional<Brand> getBrandById(Integer id);
     Optional<Brand> getBrandByName(String name);
     List<Brand> getAllBrands();
     List<Brand> getAllBrandsOrderedByName();
+    void deleteBrand(Integer id);
     boolean brandExists(String name);
-    void deleteBrand(Long id);
     long countBrands();
 }

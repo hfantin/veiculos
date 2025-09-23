@@ -9,10 +9,10 @@ public interface ModelRepository {
     Model save(Model model);
     Optional<Model> findById(Integer id);
     List<Model> findByBrandId(Integer brandId);
-    List<Model> findAllWithBrand();
+    List<Model> findAll();
     List<Model> findAllOrderedByName();
+    void deleteById(Integer id);
     boolean existsByBrandIdAndName(Integer brandId, String name);
     boolean existsById(Integer id);
-    void deleteById(Integer id);
     long count();
 }

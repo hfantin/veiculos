@@ -41,7 +41,7 @@ public class ModelRepositoryAdapter implements ModelRepository {
 
 
     @Override
-    public List<Model> findAllWithBrand() {
+    public List<Model> findAll() {
         return modelJpaRepository.findAllWithBrand().stream()
                 .map(modelMapper::toDomainWithBrand)
                 .collect(Collectors.toList());

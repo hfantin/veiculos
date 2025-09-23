@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BrandJpaRepository extends JpaRepository<BrandEntity, Long> {
+public interface BrandJpaRepository extends JpaRepository<BrandEntity, Integer> {
 
     Optional<BrandEntity> findByName(String name);
 

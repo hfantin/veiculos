@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 public class Vehicle {
-
     private Integer id;
     private Integer modelId;
+    private String modelName; // Novo campo
+    private Integer brandId; // Novo campo
+    private String brandName; // Novo campo
     private Integer year;
     private String color;
     private BigDecimal price;

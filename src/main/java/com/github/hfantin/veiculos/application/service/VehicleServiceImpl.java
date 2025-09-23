@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-/*
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -50,8 +50,20 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
+    public Optional<Vehicle> getVehicleByIdWithDetails(Integer id) {
+        return vehicleRepository.findByIdWithDetails(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Vehicle> getAllVehicles() {
         return vehicleRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vehicle> getAllVehiclesWithDetails() {
+        return vehicleRepository.findAllWithDetails();
     }
 
     @Override
@@ -62,8 +74,32 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByStatusWithDetails(VehicleStatus status) {
+        return vehicleRepository.findByStatusWithDetails(status);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Vehicle> getVehiclesByModelId(Integer modelId) {
         return vehicleRepository.findByModelId(modelId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByModelIdWithDetails(Integer modelId) {
+        return vehicleRepository.findByModelIdWithDetails(modelId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByBrandId(Integer brandId) {
+        return vehicleRepository.findByBrandId(brandId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByBrandIdWithDetails(Integer brandId) {
+        return vehicleRepository.findByBrandIdWithDetails(brandId);
     }
 
     @Override
@@ -74,8 +110,20 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByPriceRangeWithDetails(BigDecimal minPrice, BigDecimal maxPrice) {
+        return vehicleRepository.findByPriceRangeWithDetails(minPrice, maxPrice);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Vehicle> getVehiclesByYearRange(Integer startYear, Integer endYear) {
         return vehicleRepository.findByYearRange(startYear, endYear);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vehicle> getVehiclesByYearRangeWithDetails(Integer startYear, Integer endYear) {
+        return vehicleRepository.findByYearRangeWithDetails(startYear, endYear);
     }
 
     @Override
@@ -122,5 +170,3 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicleRepository.count();
     }
 }
-*/
-

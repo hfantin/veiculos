@@ -31,7 +31,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand updateBrand(Long id, Brand brand) {
+    public Brand updateBrand(Integer id, Brand brand) {
         brand.validate();
 
         return brandRepository.findById(id)
@@ -50,7 +50,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Brand> getBrandById(Long id) {
+    public Optional<Brand> getBrandById(Integer id) {
         return brandRepository.findById(id);
     }
 
@@ -79,7 +79,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public void deleteBrand(Long id) {
+    public void deleteBrand(Integer id) {
         if (!brandRepository.existsById(id)) {
             throw new IllegalArgumentException("Brand not found with id: " + id);
         }
