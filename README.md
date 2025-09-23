@@ -21,7 +21,6 @@
 4. acessar endereço do frontend: http://localhost:8080
 
 
-
 ### estrutura do projeto
 ```
 ├── config/   
@@ -49,34 +48,9 @@
 └── util/   
 ```
 
+### banco de dados
 
-- nova estrutura:
-```
-src/
-├── main/
-│   ├── java/com/example/
-│   │   ├── domain/
-│   │   │   ├── model/
-│   │   │   ├── repository/
-│   │   │   └── service/
-│   │   ├── application/
-│   │   │   ├── dto/
-│   │   │   ├── mapper/
-│   │   │   └── service/
-│   │   ├── infrastructure/
-│   │   │   ├── config/
-│   │   │   ├── persistence/
-│   │   │   │   ├── entity/
-│   │   │   │   └── repository/
-│   │   │   └── rest/
-│   │   │       └── controller/
-│   │   └── presentation/
-│   │       └── dto/
-│   └── resources/
-└── test/
-
-```
-
+![bd.png](docs/bd.png)
 
 ### API 
 - [swagger](http://localhost:8080/swagger-ui/index.html)
