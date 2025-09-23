@@ -29,41 +29,16 @@ public class ModelRepositoryAdapter implements ModelRepository {
     @Override
     public Optional<Model> findById(Integer id) {
         return modelJpaRepository.findById(id)
-                .map(modelMapper::toDomain);
-    }
-
-    @Override
-    public Optional<Model> findByIdWithBrand(Integer id) {
-        return modelJpaRepository.findByIdWithBrand(id)
                 .map(modelMapper::toDomainWithBrand);
     }
 
     @Override
-    public Optional<Model> findByBrandIdAndName(Integer brandId, String name) {
-        return modelJpaRepository.findByBrandIdAndName(brandId, name)
-                .map(modelMapper::toDomain);
-    }
-
-    @Override
     public List<Model> findByBrandId(Integer brandId) {
-        return modelJpaRepository.findByBrandId(brandId).stream()
-                .map(modelMapper::toDomain)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Model> findByBrandIdWithBrand(Integer brandId) {
         return modelJpaRepository.findByBrandIdWithBrand(brandId).stream()
                 .map(modelMapper::toDomainWithBrand)
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Model> findAll() {
-        return modelJpaRepository.findAll().stream()
-                .map(modelMapper::toDomain)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<Model> findAllWithBrand() {
@@ -74,13 +49,6 @@ public class ModelRepositoryAdapter implements ModelRepository {
 
     @Override
     public List<Model> findAllOrderedByName() {
-        return modelJpaRepository.findAllOrderedByName().stream()
-                .map(modelMapper::toDomain)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Model> findAllOrderedByNameWithBrand() {
         return modelJpaRepository.findAllOrderedByNameWithBrand().stream()
                 .map(modelMapper::toDomainWithBrand)
                 .collect(Collectors.toList());
