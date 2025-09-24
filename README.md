@@ -3,14 +3,19 @@
 ## configurações
 ### executar localmente utilizando docker compose na raiz deste projeto
 
-1. gerar arquivo .env com o seguinte conteúdo:
-   ```env
-    DB_HOST=localhost
-    DB_PORT=5432
-    DB_NAME=veiculos_db
-    DB_USERNAME=
-    DB_PASSWORD=
+1. gerar arquivo src/main/resources/application-dev.properties com o seguinte conteúdo:
+   ```properties
+    # auth
+    auth.client-id=AbWDEBmr3kAI1eaxBC4PLsGIYXhFtGFD
+    auth.client-secret=NwC9nvjve13HAHbB-SdCa6eOH6v56SBu76FlP-7ZBIgc-7ntXz-sVoGT9EBh7LNt
+    
+    # DB
+    spring.datasource.url=jdbc:postgresql://localhost:5432/veiculos_db
+    spring.datasource.username=admin
+    spring.datasource.password=123456
    ```
+   
+obs.: habilitar perfil dev para sobrescrever as configurações em application.properties, incluindo a propriedade **spring.profiles.active=dev** ou no script de execução - ./mvnw spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"
 
 2. criar rede do docker com comando abaixo:
    > docker network create localnet
