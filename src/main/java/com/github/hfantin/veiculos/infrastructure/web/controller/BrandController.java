@@ -7,6 +7,7 @@ import com.github.hfantin.veiculos.infrastructure.web.mapper.BrandWebMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/brands")
 @Tag(name = "Brands", description = "API para gerenciamento de marcas de veículos")
+@CrossOrigin(origins = "*")
+@SecurityRequirement(name = "bearerAuth")
 public class BrandController {
 
     private final BrandService brandService;

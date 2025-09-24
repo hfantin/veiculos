@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/models")
 @Tag(name = "Models", description = "API para gerenciamento de modelos de veículos")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class ModelController {
 
     private final ModelService modelService;
