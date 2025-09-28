@@ -84,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        customer.validate();
+        customer.validateForUpdate();
 
         log.info("Updating customer with ID: {}", customer.getId());
 
@@ -92,10 +92,6 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + customer.getId()));
 
         // Atualizar apenas os campos permitidos
-        existingCustomer.setAuthId(customer.getAuthId());
-        existingCustomer.setFirstName(customer.getFirstName());
-        existingCustomer.setLastName(customer.getLastName());
-        existingCustomer.setEmail(customer.getEmail());
         existingCustomer.setPhone(customer.getPhone());
         existingCustomer.setAddress(customer.getAddress());
         existingCustomer.setType(customer.getType());

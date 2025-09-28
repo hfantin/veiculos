@@ -4,6 +4,7 @@ import com.github.hfantin.veiculos.domain.model.Customer;
 import com.github.hfantin.veiculos.domain.model.enums.CustomerType;
 import com.github.hfantin.veiculos.infrastructure.web.dto.CustomerRequest;
 import com.github.hfantin.veiculos.infrastructure.web.dto.CustomerResponse;
+import com.github.hfantin.veiculos.infrastructure.web.dto.CustomerUpdateRequest;
 
 public class CustomerWebMapper {
 
@@ -13,6 +14,14 @@ public class CustomerWebMapper {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
+                .phone(request.getPhone())
+                .address(request.getAddress())
+                .type(request.getType() != null ? request.getType() : CustomerType.BUYER)
+                .build();
+    }
+
+    public static Customer toEntity(CustomerUpdateRequest request) {
+        return Customer.builder()
                 .phone(request.getPhone())
                 .address(request.getAddress())
                 .type(request.getType() != null ? request.getType() : CustomerType.BUYER)
