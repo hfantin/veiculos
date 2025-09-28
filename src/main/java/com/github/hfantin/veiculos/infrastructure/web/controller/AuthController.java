@@ -44,7 +44,7 @@ public class AuthController {
             Authentication authentication) {
 
         Map<String, Object> response = new HashMap<>();
-        response.put("userClaims", oidcUser.getClaims());
+//        response.put("userClaims", oidcUser.getClaims());
 
         if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
             OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(
