@@ -8,14 +8,14 @@ import java.util.Optional;
 
 public interface CustomerService {
     Customer createCustomer(Customer customer);
-    Customer updateCustomer(Integer id, Customer customer);
-    Optional<Customer> getCustomerById(Integer id);
-    Optional<Customer> getCustomerByAuthId(String authId);
-    Optional<Customer> getCustomerByEmail(String email);
-    List<Customer> getAllCustomers();
-    List<Customer> getCustomersByType(CustomerType type);
-    boolean customerExistsByAuthId(String authId);
-    boolean customerExistsByEmail(String email);
-    void deleteCustomer(Integer id);
-    long countCustomers();
+    Customer createOrUpdateFromOAuth(String authId, String email, String firstName, String lastName);
+    Customer updateCustomer(Customer customer);
+    Optional<Customer> findById(Integer id);
+    Optional<Customer> findByAuthId(String authId);
+    Optional<Customer> findByEmail(String email);
+    List<Customer> findAll();
+    void deleteById(Integer id);
+    boolean existsByAuthId(String authId);
+    boolean existsByEmail(String email);
+
 }
