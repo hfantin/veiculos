@@ -52,6 +52,16 @@ public class Customer {
         }
     }
 
+    public void validateForUpdate() {
+        //TODO validar telefone quando existir
+        //TODO validar endereço quando existir
+
+        //TODO VALIDAR SE tipo é valido
+        if (type == null) {
+            throw new IllegalArgumentException("Customer type cannot be null");
+        }
+    }
+
     public void updateProfile(String firstName, String lastName, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;

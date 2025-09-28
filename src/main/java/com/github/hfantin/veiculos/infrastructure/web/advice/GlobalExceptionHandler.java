@@ -16,8 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> handleIllegalArgumentException(IllegalArgumentException ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", ex.getMessage());
+        var response = Map.of("error", ex.getMessage());
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -38,8 +37,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", "An unexpected error occurred");
+        var response = Map.of("error", "An unexpected error occurred", "details", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
