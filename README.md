@@ -43,9 +43,7 @@ DB_NAME=veiculos_db
 │   ├── repository/  
 │   └── service/   
 ├── application/   
-│   ├── dto/   
 │   ├── service/   
-│   └── port/   
 ├── infrastructure/   
 │   ├── persistence/   
 │   │   ├── entity/   
@@ -54,12 +52,9 @@ DB_NAME=veiculos_db
 │   ├── web/   
 │   │   ├── controller/   
 │   │   ├── dto/
-│   │   ├── mapper/      
-│   │   └── config/   
+│   │   ├── mapper/   
 │   │   └── events/   
-│   └── external/   
-└── shared/   
-└── util/   
+ 
 ```
 
 ### banco de dados

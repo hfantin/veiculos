@@ -51,4 +51,21 @@ public class Customer {
             throw new IllegalArgumentException("Customer type cannot be null");
         }
     }
+
+    public void updateProfile(String firstName, String lastName, String phone, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateType(CustomerType type) {
+        this.type = type;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

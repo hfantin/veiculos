@@ -1,5 +1,6 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.entity;
 
+import com.github.hfantin.veiculos.domain.model.enums.CustomerType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,9 +18,6 @@ import java.time.LocalDateTime;
 @ToString
 public class CustomerEntity {
 
-    public enum Type {
-        BUYER, SELLER, BOTH
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +43,7 @@ public class CustomerEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", length = 20)
-    private Type type;
+    private CustomerType type;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
