@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.hfantin</groupId>
     <artifactId>veiculos</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>veiculos</name>
     <description>TRABALHO SUB TECH CHALLENGE CURSO SOAT – PÓSTECH</description>
     <url/>
