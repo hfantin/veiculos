@@ -1,6 +1,5 @@
 package com.github.hfantin.veiculos.infrastructure.web.controller;
 
-import com.github.hfantin.veiculos.config.AuthConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,12 +24,6 @@ public class AuthController {
     private final RestTemplate restTemplate = new RestTemplate();
 
 
-    private final AuthConfig authConfig;
-
-    @Autowired
-    public AuthController(AuthConfig authConfig) {
-        this.authConfig = authConfig;
-    }
 
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
@@ -53,45 +46,5 @@ public class AuthController {
 
         return response;
     }
-
-
-//    @PostMapping("/auth")
-//    public ResponseEntity<AuthResponse> getAccessToken() {
-//        String tokenUrl = "https://hfantin.us.auth0.com/oauth/token";
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//
-//        System.out.println("aaa " + authConfig);
-//
-//        Map<String, String> body = Map.of(
-//                "client_id", authConfig.getClientId(),
-//                "client_secret", authConfig.getClientSecret(),
-//                "audience", "https://veiculos/api",
-//                "grant_type", "client_credentials"
-//        );
-//
-//        HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
-//
-//        try {
-//            var response = restTemplate.postForEntity(tokenUrl, request, AuthResponse.class);
-//            return ResponseEntity.ok(response.getBody());
-//        } catch (Exception e) {
-//            throw new Auth0AuthenticationException("Failed to get token", e);
-//        }
-//    }
-//
-//    @GetMapping("/auth/callback")
-//    public ResponseEntity<AuthResponse> authCallback() {
-//        return ResponseEntity.ok(new AuthResponse("abc123", 1, "Bearer"));
-//
-//    }
-//
-//    @GetMapping("/auth/logout")
-//    public ResponseEntity<String> authLogout() {
-//        return ResponseEntity.ok("successfully logged out!");
-//
-//    }
-
 
 }
