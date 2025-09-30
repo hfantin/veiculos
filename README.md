@@ -6,8 +6,8 @@
 1. gerar arquivo src/main/resources/application-dev.properties com o seguinte conteúdo:
    ```properties
     # auth
-    auth.client-id=AbWDEBmr3kAI1eaxBC4PLsGIYXhFtGFD
-    auth.client-secret=NwC9nvjve13HAHbB-SdCa6eOH6v56SBu76FlP-7ZBIgc-7ntXz-sVoGT9EBh7LNt
+    okta.oauth2.client-id=
+    okta.oauth2.client-secret=
     
     # DB
     spring.datasource.url=jdbc:postgresql://localhost:5432/veiculos_db
