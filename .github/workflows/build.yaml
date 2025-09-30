@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write   # ✅ allows pushing tags and creating releases
+
 jobs:
   build-tag-release:
     runs-on: ubuntu-latest
