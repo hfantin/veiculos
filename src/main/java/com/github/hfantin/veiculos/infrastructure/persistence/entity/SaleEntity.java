@@ -1,5 +1,6 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.entity;
 
+import com.github.hfantin.veiculos.domain.model.enums.SaleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,10 +17,6 @@ import java.time.LocalDateTime;
 @Builder
 @ToString(exclude = {"customer"})
 public class SaleEntity {
-
-    public enum Status {
-        PENDING, COMPLETED, CANCELLED
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +41,7 @@ public class SaleEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 20)
-    private Status status;
+    private SaleStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

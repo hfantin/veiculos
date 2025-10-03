@@ -67,8 +67,3 @@ DB_NAME=veiculos_db
 ### LINKS
 - auth0 - https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization
 - auth0 com google - https://auth0.com/docs/quickstart/webapp/java-spring-boot/interactive
-
-### PENDENCIAS
-- [x] integrar auth0 com autenticação de terceiros, com google ou github
-- [x] obter dados do usuario após o login e gravar na tabela
-- [x] criar perfis de usuario: administrador e cliente(não pode alterar tabelas)

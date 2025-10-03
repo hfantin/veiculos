@@ -1,12 +1,18 @@
 -- limpar tabelas
 DELETE from brands;
 DELETE from models;
+DELETE from sale_vehicles;
 DELETE from vehicles;
+DELETE from customers;
+DELETE from sales;
 
 -- reinicia sequenciais
  ALTER SEQUENCE brands_id_seq RESTART;
  ALTER SEQUENCE models_id_seq RESTART;
  ALTER SEQUENCE vehicles_id_seq RESTART;
+ ALTER SEQUENCE customers_id_seq RESTART;
+ ALTER SEQUENCE sales_id_seq RESTART;
+ ALTER SEQUENCE sale_vehicles_id_seq RESTART;
 
 -- popular as tabelas marcas de veículos
 INSERT INTO brands (name) VALUES

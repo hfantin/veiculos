@@ -29,4 +29,6 @@ public interface VehicleService {
     Vehicle makeVehicleAvailable(Integer id);
     void deleteVehicle(Integer id);
     long countVehicles();
+    Optional<Vehicle> findById(Integer id);
+    Vehicle update(Vehicle vehicle);
 }

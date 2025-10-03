@@ -5,10 +5,12 @@ import com.github.hfantin.veiculos.domain.model.enums.VehicleStatus;
 import com.github.hfantin.veiculos.domain.repository.VehicleRepository;
 import com.github.hfantin.veiculos.domain.service.VehicleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
@@ -169,4 +172,27 @@ public class VehicleServiceImpl implements VehicleService {
     public long countVehicles() {
         return vehicleRepository.count();
     }
+
+    @Override
+    public Optional<Vehicle> findById(Integer id) { // ✅ IMPLEMENTAR
+        return vehicleRepository.findById(id);
+    }
+
+
+    @Override
+    public Vehicle update(Vehicle vehicle) {
+        log.info("Updating vehicle with ID: {}", vehicle.getId());
+        Vehicle existingVehicle = vehicleRepository.findById(vehicle.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with ID: " + vehicle.getId()));
+
+        existingVehicle.setModelId(vehicle.getModelId());
+        existingVehicle.setYear(vehicle.getYear());
+        existingVehicle.setColor(vehicle.getColor());
+        existingVehicle.setPrice(vehicle.getPrice());
+        existingVehicle.setStatus(vehicle.getStatus());
+        existingVehicle.setUpdatedAt(LocalDateTime.now());
+
+        return vehicleRepository.save(existingVehicle);
+    }
+
 }
