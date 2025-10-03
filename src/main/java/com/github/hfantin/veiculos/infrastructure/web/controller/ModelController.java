@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/models")
-@Tag(name = "Models", description = "API para gerenciamento de modelos de veículos")
+@Tag(name = "3 - Modelos", description = "API para gerenciamento de modelos de veículos")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
@@ -51,18 +51,6 @@ public class ModelController {
         var createdModel = modelService.createModel(model);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(modelWebMapper.toResponse(createdModel));
-    }
-
-    @GetMapping("/exists")
-    @Operation(summary = "Verificar existência de modelo", description = "Verifica se um modelo com o nome especificado já existe para uma marca")
-    public ResponseEntity<Boolean> modelExists(
-            @Parameter(description = "ID da marca", example = "1", required = true)
-            @RequestParam Integer brandId,
-
-            @Parameter(description = "Nome do modelo", example = "Corolla", required = true)
-            @RequestParam String name) {
-
-        return ResponseEntity.ok(modelService.modelExists(brandId, name));
     }
 
     @PutMapping("/{id}")
@@ -100,12 +88,6 @@ public class ModelController {
 
         modelService.deleteModel(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/count")
-    @Operation(summary = "Contar total de modelos", description = "Retorna o número total de modelos cadastrados")
-    public ResponseEntity<Long> countModels() {
-        return ResponseEntity.ok(modelService.countModels());
     }
 
     @GetMapping("/{id}")

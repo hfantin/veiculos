@@ -14,9 +14,10 @@ import java.util.Optional;
 @Repository
 public interface VehicleJpaRepository extends JpaRepository<VehicleEntity, Integer> {
 
+    @Query("SELECT v FROM VehicleEntity v WHERE v.status = :status ORDER BY v.price ASC")
     List<VehicleEntity> findByStatus(VehicleStatus status);
 
-    @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand WHERE v.status = :status")
+    @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand WHERE v.status = :status ORDER BY v.price ASC")
     List<VehicleEntity> findByStatusWithDetails(@Param("status") VehicleStatus status);
 
     List<VehicleEntity> findByModelId(Integer modelId);
@@ -48,12 +49,4 @@ public interface VehicleJpaRepository extends JpaRepository<VehicleEntity, Integ
     @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand")
     List<VehicleEntity> findAllWithDetails();
 
-    @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand ORDER BY v.price ASC")
-    List<VehicleEntity> findAllWithDetailsOrderedByPrice();
-
-    @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand WHERE v.status = 'AVAILABLE' ORDER BY v.price ASC")
-    List<VehicleEntity> findAvailableWithDetailsOrderedByPrice();
-
-    @Query("SELECT v FROM VehicleEntity v JOIN FETCH v.model m JOIN FETCH m.brand WHERE v.status = 'SOLD' ORDER BY v.price ASC")
-    List<VehicleEntity> findSoldWithDetailsOrderedByPrice();
 }

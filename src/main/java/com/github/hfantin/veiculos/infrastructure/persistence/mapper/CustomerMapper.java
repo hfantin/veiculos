@@ -20,6 +20,8 @@ public class CustomerMapper {
         entity.setEmail(customer.getEmail());
         entity.setPhone(customer.getPhone());
         entity.setAddress(customer.getAddress());
+        entity.setCpf(customer.getCpf());
+        entity.setValidated(customer.getValidated());
         entity.setType(customer.getType());
         entity.setCreatedAt(customer.getCreatedAt());
         entity.setUpdatedAt(customer.getUpdatedAt());
@@ -40,6 +42,8 @@ public class CustomerMapper {
                 .email(entity.getEmail())
                 .phone(entity.getPhone())
                 .address(entity.getAddress())
+                .cpf(entity.getCpf())
+                .validated(entity.getValidated())
                 .type(entity.getType())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())

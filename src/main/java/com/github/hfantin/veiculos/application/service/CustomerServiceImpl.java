@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -21,25 +20,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-    }
-
-    @Override
-    public Customer createCustomer(Customer customer) {
-        customer.validate();
-
-        // Verificar se já existe customer com este authId
-        if (customerRepository.findByAuthId(customer.getAuthId()).isPresent()) {
-            throw new IllegalArgumentException("Customer with authId '" + customer.getAuthId() + "' already exists");
-        }
-
-        // Verificar se já existe customer com este email
-        if (customerRepository.findByEmail(customer.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Customer with email '" + customer.getEmail() + "' already exists");
-        }
-
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setUpdatedAt(LocalDateTime.now());
-        return customerRepository.save(customer);
     }
 
     @Override
@@ -75,6 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .firstName(firstName)
                 .lastName(lastName)
                 .type(CustomerType.BUYER)
+                .validated(false)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -88,15 +69,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Updating customer with ID: {}", customer.getId());
 
-        Customer existingCustomer = customerRepository.findById(customer.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found with ID: " + customer.getId()));
+        Customer existingCustomer = customerRepository.findByEmail(customer.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado com o email: " + customer.getEmail()));
 
         // Atualizar apenas os campos permitidos
         existingCustomer.setPhone(customer.getPhone());
         existingCustomer.setAddress(customer.getAddress());
-        existingCustomer.setType(customer.getType());
+        existingCustomer.setCpf(customer.getCpf());
+        existingCustomer.setValidated(true);
         existingCustomer.setUpdatedAt(LocalDateTime.now());
-
         return customerRepository.save(existingCustomer);
     }
 
@@ -114,32 +95,5 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> findByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
-
-    @Override
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
-    }
-
-
-    @Override
-    public void deleteById(Integer id) {
-        if (!customerRepository.existsById(id)) {
-            throw new IllegalArgumentException("Customer not found with ID: " + id);
-        }
-        customerRepository.deleteById(id);
-        log.info("Customer deleted with ID: {}", id);
-    }
-
-    @Override
-    public boolean existsByAuthId(String authId) {
-        return customerRepository.findByAuthId(authId).isPresent();
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        return customerRepository.findByEmail(email).isPresent();
-    }
-
-
 
 }

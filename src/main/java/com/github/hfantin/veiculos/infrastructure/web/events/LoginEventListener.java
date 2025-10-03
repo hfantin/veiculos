@@ -38,7 +38,14 @@ public class LoginEventListener {
 
             try {
                 var customer = customerService.createOrUpdateFromOAuth(authId, email, firstName, lastName);
-                log.info("cliente processado com sucesso - id: {}, email: {}", customer.getId(), customer.getEmail());
+                log.info("cliente processado com sucesso - id: {}, email: {}, validado: {}",
+                        customer.getId(), customer.getEmail(), customer.getValidated());
+
+                // Log adicional para usuários não validados
+                if (!customer.getValidated()) {
+                    log.warn("Usuário logado mas não validado: {}", authId);
+                }
+
             } catch (Exception e) {
                 log.error("erro processando cliente após login: {}", e.getMessage(), e);
             }

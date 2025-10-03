@@ -12,12 +12,8 @@ public class VehicleSaleWebMapper {
                 .totalAmount(sale.getTotalAmount())
                 .status(sale.getStatus())
                 .createdAt(sale.getCreatedAt())
-                .paymentUrl(generatePaymentUrl(sale.getId())) // Simular URL de pagamento
+                .paymentUrl(sale.getLink())
                 .build();
     }
 
-    private static String generatePaymentUrl(Integer saleId) {
-        // Simular geração de URL de pagamento (Mercado Pago, etc.)
-        return "https://api.mercadopago.com/checkout/v1/redirect?preference_id=" + saleId + "_" + System.currentTimeMillis();
-    }
 }

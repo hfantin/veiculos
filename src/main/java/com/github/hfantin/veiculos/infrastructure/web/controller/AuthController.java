@@ -1,5 +1,9 @@
 package com.github.hfantin.veiculos.infrastructure.web.controller;
 
+import com.github.hfantin.veiculos.domain.model.Customer;
+import com.github.hfantin.veiculos.domain.service.CustomerService;
+import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,17 +23,20 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/public")
+@Slf4j
+@Hidden
 public class AuthController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-
-
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping("/token")
-    public Map<String, Object> me(
+    public Map<String, Object> obterToken(
             @AuthenticationPrincipal OidcUser oidcUser,
             Authentication authentication) {
 
@@ -43,6 +50,17 @@ public class AuthController {
                 response.put("accessToken", client.getAccessToken().getTokenValue());
             }
         }
+
+        Map<String, Object> claims = oidcUser.getClaims();
+        String email = (String) claims.get("email");
+        String firstName = (String) claims.get("given_name");
+
+        response.put("mensagem",
+                customerService.findByEmail(email)
+                        .filter(Customer::getValidated)
+                        .map(c -> "Cadastro completo") // ajuste a mensagem conforme necessário
+                        .orElse("Seja bem vindo " + firstName + ", seu cadastro foi efetuado com sucesso, por favor, complete o cadastro para utilizar nossa plataforma.")
+        );
 
         return response;
     }

@@ -39,23 +39,25 @@ O time de qualidade de operação definiu que todas as mudanças da solução (i
 ### PENDENCIAS
 - [x] integrar auth0 com autenticação de terceiros, com google ou github
 - [x] obter dados do usuario após o login e gravar na tabela
-- [ ] Cadastrar um veículo para venda (Marca, modelo, ano, cor, preço) - tabela vehicles
-- [ ] Editar os dados do veículo
-- [ ] Permitir a compra do veículo via internet para pessoas cadastradas. O cadastro deve ser
+- [x] Cadastrar um veículo para venda (Marca, modelo, ano, cor, preço) - tabela vehicles
+- [x] Editar os dados do veículo
+- [x] Permitir a compra do veículo via internet para pessoas cadastradas. O cadastro deve ser
   feito anteriormente à compra do veículo
-- [ ] Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro
-- [ ] Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro
-- [ ] Separar o processo de registro e autorização de compradores. Para autorização de usuários, foi usado auth0 + gmail.
+- [x] Separar o processo de registro e autorização de compradores. Para autorização de usuários, foi usado auth0 + gmail.
       já o registro, será feito na tabela customers
-- [ ] ajustar os campos da tabela customers, deve ser incluido e validado o cpf do usuário, 
+- [x] ajustar os campos da tabela customers, deve ser incluido e validado o cpf do usuário, 
       endereço e telefone. Caso o usuário não complete o cadastro, não terá acesso ao sistema.
 - [x] crud das tabela sales
 - [x] crud das tabela sale_vehicle
-- [ ] enviar email para usuario quando iniciar uma nova compra na api /api/vehicle-sales/initiate e quando completar ou cancelar
+- [x] enviar email para usuario quando iniciar uma nova compra na api /api/vehicle-sales/initiate e quando completar ou cancelar
+- [x] lógica para registro e autorização de compradores deve ser feito de forma separada
+- [ ] excluir endpoints que não serão utilizados, bem como toda a estrutura
+- [ ] UTF-8
+- [ ] Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro
+- [ ] Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro
 - [ ] criar perfis de usuario: administrador e cliente(não pode alterar tabelas)
-- [ ] lógica para registro e autorização de compradores deve ser feito de forma separada
-- [ ] testes unitários e de integração 
 - [ ] o processo de compilação no github deve gerar imagem docker
+- [ ] testes unitários e de integração 
 - [ ] integrar com sonarkube e esteiras ci/cd, exigindo cobertura minima de código de 60%
 - [ ] diagrama de fluxo
 - [ ] documentar sistema

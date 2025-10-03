@@ -39,7 +39,6 @@ public class ModelRepositoryAdapter implements ModelRepository {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public List<Model> findAll() {
         return modelJpaRepository.findAllWithBrand().stream()
@@ -69,8 +68,4 @@ public class ModelRepositoryAdapter implements ModelRepository {
         modelJpaRepository.deleteById(id);
     }
 
-    @Override
-    public long count() {
-        return modelJpaRepository.count();
-    }
 }
