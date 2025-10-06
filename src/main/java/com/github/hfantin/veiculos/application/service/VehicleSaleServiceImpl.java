@@ -1,17 +1,18 @@
 package com.github.hfantin.veiculos.application.service;
 
+import com.github.hfantin.veiculos.domain.model.Customer;
 import com.github.hfantin.veiculos.domain.model.Sale;
 import com.github.hfantin.veiculos.domain.model.SaleVehicle;
 import com.github.hfantin.veiculos.domain.model.Vehicle;
 import com.github.hfantin.veiculos.domain.model.enums.SaleStatus;
 import com.github.hfantin.veiculos.domain.model.enums.VehicleStatus;
 import com.github.hfantin.veiculos.domain.service.*;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -23,6 +24,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
     private final SaleVehicleService saleVehicleService;
     private final VehicleService vehicleService;
     private final CustomerService customerService;
+    private final EmailService emailService;
 
     @Override
     @Transactional
@@ -30,7 +32,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         log.info("Initiating vehicle sale - Vehicle ID: {}, Customer ID: {}", vehicleId, customerId);
 
         // Verificar se o veículo existe e está disponível
-        Vehicle vehicle = vehicleService.findById(vehicleId)
+        Vehicle vehicle = vehicleService.getVehicleByIdWithDetails(vehicleId)
                 .orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado com ID: " + vehicleId));
 
         if (vehicle.getStatus() != VehicleStatus.AVAILABLE) {
@@ -38,7 +40,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         }
 
         // Verificar se o cliente existe
-        customerService.findById(customerId)
+        Customer customer = customerService.findById(customerId)
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado com ID: " + customerId));
 
         // Verificar se o veículo já está em alguma venda
@@ -69,6 +71,16 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         vehicleService.update(vehicle);
 
         log.info("Vehicle sale initiated successfully - Sale ID: {}, Vehicle ID: {}", savedSale.getId(), vehicleId);
+
+        try {
+            //TODO montar link do mercado livre
+            String link = "https://mercadopago.com.br/123456";
+            //"Toyota Corola prata 2020 - R$ 100.000,00"
+            String dadosVeiculo = String.format("%s %s %s %s R$ %.2f", vehicle.getBrandName(), vehicle.getModelName(), vehicle.getColor(), vehicle.getYear(), vehicle.getPrice());
+            emailService.sendReserved(customer.getEmail(), customer.getFirstName(), link, dadosVeiculo);
+        } catch (MessagingException e) {
+            log.error("não foi possível enviar o email", e.getNextException());
+        }
         return savedSale;
     }
 
@@ -95,7 +107,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         Sale updatedSale = saleService.update(sale);
 
         // Atualizar status do veículo para SOLD
-        Vehicle vehicle = vehicleService.findById(saleVehicle.getVehicleId())
+        Vehicle vehicle = vehicleService.getVehicleByIdWithDetails(saleVehicle.getVehicleId())
                 .orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado com ID: " + saleVehicle.getVehicleId()));
 
         vehicle.setStatus(VehicleStatus.SOLD);
@@ -103,6 +115,14 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         vehicleService.update(vehicle);
 
         log.info("Sale completed successfully - Sale ID: {}, Vehicle ID: {}", saleId, saleVehicle.getVehicleId());
+        try {
+            Customer customer = customerService.findById(sale.getCustomerId())
+                    .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado com ID: " + sale.getCustomerId()));
+            String dadosVeiculo = String.format("%s %s %s %s R$ %.2f", vehicle.getBrandName(), vehicle.getModelName(), vehicle.getColor(), vehicle.getYear(), vehicle.getPrice());
+            emailService.sendConfirmed(customer.getEmail(), customer.getFirstName(), dadosVeiculo);
+        } catch (MessagingException e) {
+            log.error("não foi possível enviar o email", e.getNextException());
+        }
         return updatedSale;
     }
 
@@ -128,13 +148,23 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         Sale updatedSale = saleService.update(sale);
 
         // Atualizar status do veículo de volta para AVAILABLE
-        Vehicle vehicle = vehicleService.findById(saleVehicle.getVehicleId())
+        Vehicle vehicle = vehicleService.getVehicleByIdWithDetails(saleVehicle.getVehicleId())
                 .orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado com ID: " + saleVehicle.getVehicleId()));
 
         vehicle.setStatus(VehicleStatus.AVAILABLE);
         vehicleService.update(vehicle);
 
         log.info("Sale cancelled successfully - Sale ID: {}, Vehicle ID: {}", saleId, saleVehicle.getVehicleId());
+
+        try {
+            Customer customer = customerService.findById(sale.getCustomerId())
+                    .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado com ID: " + sale.getCustomerId()));
+            String dadosVeiculo = String.format("%s %s %s %s R$ %.2f", vehicle.getBrandName(), vehicle.getModelName(), vehicle.getColor(), vehicle.getYear(), vehicle.getPrice());
+            emailService.sendCanceled(customer.getEmail(), customer.getFirstName(), dadosVeiculo);
+        } catch (MessagingException e) {
+            log.error("não foi possível enviar o email", e.getNextException());
+        }
+
         return updatedSale;
     }
 }
