@@ -1,5 +1,6 @@
 package com.github.hfantin.veiculos.application.service;
 
+import com.github.hfantin.veiculos.config.AppConfig;
 import com.github.hfantin.veiculos.domain.model.PagamentoRequest;
 import com.github.hfantin.veiculos.domain.model.PagamentoResponse;
 import com.github.hfantin.veiculos.domain.service.MercadoPagoService;
@@ -10,6 +11,7 @@ import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.Map;
 @Service
 public class MercadoPagoServiceImpl implements MercadoPagoService {
 
-    private static final String MEU_SITE = "https://angelo-ascitic-nancie.ngrok-free.dev";
+    @Autowired
+    private AppConfig appConfig;
 
     @Override
     public PagamentoResponse criarPagamento(PagamentoRequest request) throws Exception {
@@ -35,8 +38,6 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         // Configurar o pagador (opcional para testes)
         PreferencePayerRequest payer = null;
         if (request.emailComprador() != null) {
-            log.info("configura email do comprador {}", request.emailComprador());
-//            String email = "test_user_3367302021471928748@testuser.com";
             payer = PreferencePayerRequest.builder()
                     .email(request.emailComprador())
                     .build();
@@ -48,20 +49,19 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
                 .payer(payer)
                 .externalReference(request.idPedidoVenda())
                 .backUrls(PreferenceBackUrlsRequest.builder()
-                        .success(String.format("%s/%s", MEU_SITE, "public/pagamentos/success"))
-                        .failure(String.format("%s/%s", MEU_SITE, "public/pagamentos/failure"))
-                        .pending(String.format("%s/%s", MEU_SITE, "public/pagamentos/pending"))
+                        .success(String.format("%s%s", appConfig.getBaseUrl(), "/success"))
+                        .failure(String.format("%s%s", appConfig.getBaseUrl(), "/failure"))
+                        .pending(String.format("%s%s", appConfig.getBaseUrl(), "/pending"))
                         .build())
                 .autoReturn("approved")
-                //TODO testar webhook novamente
-//                .notificationUrl("https://angelo-ascitic-nancie.ngrok-free.dev/public/pagamentos/webhook")
+                .notificationUrl(appConfig.getBaseUrl() + "/webhook")
                 .build();
 
         // Criar a preferência
         Preference preference = client.create(preferenceRequest);
 
         return new PagamentoResponse(
-                preference.getSandboxInitPoint(), //preference.getInitPoint(),
+                preference.getSandboxInitPoint(),
                 preference.getId(),
                 "created"
         );
@@ -80,8 +80,6 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
                 log.info("📝 Status detail: {}", payment.getStatusDetail());
                 log.info("idPedidoVenda: {}", payment.getExternalReference());
 
-                //TODO aqui deve atualizar o status do pedido na base de dados
-
                 return payment.getStatus();
 
             } catch (MPApiException e) {
@@ -93,9 +91,6 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
             } catch (Exception e) {
                 log.error("falha ao obter informações do pagamento: {}", e.getMessage(), e);
             }
-
-            return "MOCK"; //TODO remover este mock
-
         }
         return null;
     }

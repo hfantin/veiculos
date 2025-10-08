@@ -1,5 +1,7 @@
 package com.github.hfantin.veiculos.infrastructure.web.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +21,10 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/public")
+@Hidden
 public class AuthController {
 
     private final RestTemplate restTemplate = new RestTemplate();
-
-
 
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;

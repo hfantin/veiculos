@@ -3,6 +3,7 @@ package com.github.hfantin.veiculos.infrastructure.web.controller;
 import com.github.hfantin.veiculos.domain.service.InfoService;
 import com.github.hfantin.veiculos.infrastructure.web.dto.AppInfoResponse;
 import com.github.hfantin.veiculos.infrastructure.web.mapper.AppInfoMapper;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/info")
 @Tag(name = "Info", description = "API de informações do sistema")
 @CrossOrigin(origins = "*")
+@Hidden
 public class InfoController {
 
     private final InfoService infoService;
@@ -26,7 +28,7 @@ public class InfoController {
     }
 
     @GetMapping
-    @Operation(summary = "Obtém informações do sistema", description = "Retorna as nformações do sistema")
+    @Operation(summary = "Obtém informações do sistema", description = "Retorna as nformações do sistema", hidden = true)
     public ResponseEntity<AppInfoResponse> getApplicationInfo() {
         var appInfo = infoService.getApplicationInfo();
         var response = appInfoMapper.toResponse(appInfo);
