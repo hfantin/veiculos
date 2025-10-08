@@ -87,7 +87,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
 
     @Override
     @Transactional
-    public Sale completeSale(Integer saleId, String transactionId) {
+    public Sale completeSale(Integer saleId, String transactionId, String paymentMethod) {
         log.info("Completing sale - Sale ID: {}, Transaction ID: {}", saleId, transactionId);
 
         Sale sale = saleService.findById(saleId)
@@ -105,6 +105,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         // Atualizar status da venda para COMPLETED
         sale.setStatus(SaleStatus.COMPLETED);
         sale.setTransactionId(transactionId);
+        sale.setPaymentMethod(paymentMethod);
         Sale updatedSale = saleService.update(sale);
 
         // Atualizar status do veículo para SOLD

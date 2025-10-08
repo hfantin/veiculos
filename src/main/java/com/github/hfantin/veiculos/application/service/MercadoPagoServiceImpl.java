@@ -4,10 +4,7 @@ import com.github.hfantin.veiculos.domain.model.PagamentoRequest;
 import com.github.hfantin.veiculos.domain.model.PagamentoResponse;
 import com.github.hfantin.veiculos.domain.service.MercadoPagoService;
 import com.mercadopago.client.payment.PaymentClient;
-import com.mercadopago.client.preference.PreferenceClient;
-import com.mercadopago.client.preference.PreferenceItemRequest;
-import com.mercadopago.client.preference.PreferencePayerRequest;
-import com.mercadopago.client.preference.PreferenceRequest;
+import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
@@ -21,6 +18,9 @@ import java.util.Map;
 @Slf4j
 @Service
 public class MercadoPagoServiceImpl implements MercadoPagoService {
+
+    private static final String MEU_SITE = "https://angelo-ascitic-nancie.ngrok-free.dev";
+
     @Override
     public PagamentoResponse criarPagamento(PagamentoRequest request) throws Exception {
         PreferenceClient client = new PreferenceClient();
@@ -34,20 +34,27 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         List<PreferenceItemRequest> items = List.of(itemRequest);
         // Configurar o pagador (opcional para testes)
         PreferencePayerRequest payer = null;
-//        if (request.emailComprador() != null) {
+        if (request.emailComprador() != null) {
             log.info("configura email do comprador {}", request.emailComprador());
-            String email = "test_user_3367302021471928748@testuser.com";
+//            String email = "test_user_3367302021471928748@testuser.com";
             payer = PreferencePayerRequest.builder()
-                    .email(email) // em desenv tem que ser um email do tipo TEST
+                    .email(request.emailComprador())
                     .build();
-//        }
+        }
 
         // Criar a requisição da preferência
         PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                 .items(items)
                 .payer(payer)
                 .externalReference(request.idPedidoVenda())
-                .notificationUrl("https://angelo-ascitic-nancie.ngrok-free.dev/public/pagamentos/webhook")
+                .backUrls(PreferenceBackUrlsRequest.builder()
+                        .success(String.format("%s/%s", MEU_SITE, "public/pagamentos/success"))
+                        .failure(String.format("%s/%s", MEU_SITE, "public/pagamentos/failure"))
+                        .pending(String.format("%s/%s", MEU_SITE, "public/pagamentos/pending"))
+                        .build())
+                .autoReturn("approved")
+                //TODO testar webhook novamente
+//                .notificationUrl("https://angelo-ascitic-nancie.ngrok-free.dev/public/pagamentos/webhook")
                 .build();
 
         // Criar a preferência

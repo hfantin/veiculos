@@ -5,6 +5,6 @@ import jakarta.mail.MessagingException;
 
 public interface VehicleSaleService {
     Sale initiateVehicleSale(Integer vehicleId, Integer customerId);
-    Sale completeSale(Integer saleId, String transactionId);
+    Sale completeSale(Integer saleId, String transactionId, String paymentMethod);
     Sale cancelSale(Integer saleId);
 }

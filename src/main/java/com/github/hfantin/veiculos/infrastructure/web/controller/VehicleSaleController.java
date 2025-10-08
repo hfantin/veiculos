@@ -68,7 +68,7 @@ public class VehicleSaleController {
             @PathVariable Integer saleId,
             @RequestBody CompleteSaleRequest request) {
 
-        vehicleSaleService.completeSale(saleId, request.getTransactionId());
+        vehicleSaleService.completeSale(saleId, request.getTransactionId(), "card");
         return ResponseEntity.ok().build();
 
     }
