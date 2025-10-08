@@ -51,7 +51,7 @@ O time de qualidade de operação definiu que todas as mudanças da solução (i
       endereço e telefone. Caso o usuário não complete o cadastro, não terá acesso ao sistema.
 - [x] crud das tabela sales
 - [x] crud das tabela sale_vehicle
-- [ ] enviar email para usuario quando iniciar uma nova compra na api /api/vehicle-sales/initiate e quando completar ou cancelar
+- [x] enviar email para usuario quando iniciar uma nova compra na api /api/vehicle-sales/initiate e quando completar ou cancelar
 - [ ] criar perfis de usuario: administrador e cliente(não pode alterar tabelas)
 - [ ] lógica para registro e autorização de compradores deve ser feito de forma separada
 - [ ] testes unitários e de integração 

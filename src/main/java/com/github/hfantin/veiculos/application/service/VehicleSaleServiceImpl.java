@@ -1,9 +1,6 @@
 package com.github.hfantin.veiculos.application.service;
 
-import com.github.hfantin.veiculos.domain.model.Customer;
-import com.github.hfantin.veiculos.domain.model.Sale;
-import com.github.hfantin.veiculos.domain.model.SaleVehicle;
-import com.github.hfantin.veiculos.domain.model.Vehicle;
+import com.github.hfantin.veiculos.domain.model.*;
 import com.github.hfantin.veiculos.domain.model.enums.SaleStatus;
 import com.github.hfantin.veiculos.domain.model.enums.VehicleStatus;
 import com.github.hfantin.veiculos.domain.service.*;
@@ -25,6 +22,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
     private final VehicleService vehicleService;
     private final CustomerService customerService;
     private final EmailService emailService;
+    private final MercadoPagoService mercadoPagoService;
 
     @Override
     @Transactional
@@ -73,13 +71,16 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         log.info("Vehicle sale initiated successfully - Sale ID: {}, Vehicle ID: {}", savedSale.getId(), vehicleId);
 
         try {
-            //TODO montar link do mercado livre
-            String link = "https://mercadopago.com.br/123456";
-            //"Toyota Corola prata 2020 - R$ 100.000,00"
-            String dadosVeiculo = String.format("%s %s %s %s R$ %.2f", vehicle.getBrandName(), vehicle.getModelName(), vehicle.getColor(), vehicle.getYear(), vehicle.getPrice());
+            String descricaoVeiculo = String.format("%s %s %s %s", vehicle.getBrandName(), vehicle.getModelName(), vehicle.getColor(), vehicle.getYear());
+            PagamentoResponse pagamentoResponse = mercadoPagoService.criarPagamento(new PagamentoRequest(descricaoVeiculo, vehicle.getPrice(), 1, customer.getEmail(), String.valueOf(savedSale.getId())));
+            String link = pagamentoResponse.linkPagamento();
+            savedSale.setLink(link);
+            String dadosVeiculo = String.format("%s - R$ %.2f", descricaoVeiculo, vehicle.getPrice());
             emailService.sendReserved(customer.getEmail(), customer.getFirstName(), link, dadosVeiculo);
         } catch (MessagingException e) {
             log.error("não foi possível enviar o email", e.getNextException());
+        } catch (Exception e) {
+            log.error("não foi possível obter o link do mercado livre {}", e.getMessage());
         }
         return savedSale;
     }
