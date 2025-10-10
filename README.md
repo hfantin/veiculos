@@ -64,6 +64,25 @@ DB_NAME=veiculos_db
 ### API 
 - [swagger](http://localhost:8080/swagger-ui/index.html)
 
+### emails
+backstagefood6@gmail.com
+
 ### LINKS
 - auth0 - https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization
 - auth0 com google - https://auth0.com/docs/quickstart/webapp/java-spring-boot/interactive
+- mercado pago - https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/create-application
+- mercado pago devs - https://www.mercadopago.com.br/developers/pt
+- gmail senha de app - https://myaccount.google.com/apppasswords
+
+## webhook do mercado pago com ngrok
+- instalar
+```
+ curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+  | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+  && echo "deb https://ngrok-agent.s3.amazonaws.com bookworm main" \
+  | sudo tee /etc/apt/sources.list.d/ngrok.list \
+  && sudo apt update \
+  && sudo apt install ngrok
+```
+> ngrok config add-authtoken meu_token
+> ngrok http 8080

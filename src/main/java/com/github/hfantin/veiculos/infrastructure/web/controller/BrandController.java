@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/brands")
-@Tag(name = "Brands", description = "API para gerenciamento de marcas de veículos")
+@Tag(name = "2 - Marcas", description = "API para gerenciamento de marcas de veículos")
 @CrossOrigin(origins = "*")
 @SecurityRequirement(name = "bearerAuth")
 public class BrandController {
@@ -116,15 +116,4 @@ public class BrandController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/count")
-    @Operation(summary = "Contar total de marcas", description = "Retorna o número total de marcas cadastradas")
-    public ResponseEntity<Long> countBrands() {
-        return ResponseEntity.ok(brandService.countBrands());
-    }
-
-    @GetMapping("/exists/{name}")
-    @Operation(summary = "Verificar existência de uma marca", description = "Verifica se uma marca com o nome especificado já existe")
-    public ResponseEntity<Boolean> brandExists(@PathVariable String name) {
-        return ResponseEntity.ok(brandService.brandExists(name));
-    }
 }

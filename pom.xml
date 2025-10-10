@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.hfantin</groupId>
     <artifactId>veiculos</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <name>veiculos</name>
     <description>TRABALHO SUB TECH CHALLENGE CURSO SOAT – PÓSTECH</description>
     <url/>
@@ -60,11 +60,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <!-- email -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- seguranca - oAuth -->
         <dependency>
             <groupId>com.okta.spring</groupId>
             <artifactId>okta-spring-boot-starter</artifactId>
             <version>3.0.7</version>
+        </dependency>
+        <!-- mercado pago -->
+        <dependency>
+            <groupId>com.mercadopago</groupId>
+            <artifactId>sdk-java</artifactId>
+            <version>2.5.0</version>
         </dependency>
 
         <dependency>
@@ -140,6 +151,26 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.60</minimum> <!-- 60% -->
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

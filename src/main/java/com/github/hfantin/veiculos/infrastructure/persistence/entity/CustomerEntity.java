@@ -41,6 +41,12 @@ public class CustomerEntity {
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
 
+    @Column(name = "cpf", columnDefinition = "TEXT")
+    private String cpf;
+
+    @Column(name = "validated", columnDefinition = "BOOL")
+    private Boolean validated;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "type", length = 20)
     private CustomerType type;

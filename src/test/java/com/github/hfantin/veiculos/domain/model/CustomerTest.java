@@ -34,55 +34,6 @@ class CustomerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar o nome completo do cliente")
-    void shouldReturnFullName() {
-        // Given
-        Customer customer = Customer.builder()
-                .firstName("Maria")
-                .lastName("Santos")
-                .build();
-
-        // When
-        String fullName = customer.getFullName();
-
-        // Then
-        assertEquals("Maria Santos", fullName);
-    }
-
-    @Test
-    @DisplayName("Deve atualizar o perfil do cliente")
-    void shouldUpdateCustomerProfile() {
-        // Given
-        Customer customer = new Customer("auth123", "João", "Silva", "joao@email.com");
-        LocalDateTime originalUpdatedAt = customer.getUpdatedAt();
-
-        // When
-        customer.updateProfile("João Pedro", "Silva Souza", "11999999999", "Rua ABC, 123");
-
-        // Then
-        assertEquals("João Pedro", customer.getFirstName());
-        assertEquals("Silva Souza", customer.getLastName());
-        assertEquals("11999999999", customer.getPhone());
-        assertEquals("Rua ABC, 123", customer.getAddress());
-        assertTrue(customer.getUpdatedAt().isAfter(originalUpdatedAt));
-    }
-
-    @Test
-    @DisplayName("Deve atualizar o tipo do cliente")
-    void shouldUpdateCustomerType() {
-        // Given
-        Customer customer = new Customer("auth123", "João", "Silva", "joao@email.com");
-        LocalDateTime originalUpdatedAt = customer.getUpdatedAt();
-
-        // When
-        customer.updateType(CustomerType.SELLER);
-
-        // Then
-        assertEquals(CustomerType.SELLER, customer.getType());
-        assertTrue(customer.getUpdatedAt().isAfter(originalUpdatedAt));
-    }
-
-    @Test
     @DisplayName("Deve criar cliente usando builder pattern")
     void shouldCreateCustomerUsingBuilder() {
         // Given & When

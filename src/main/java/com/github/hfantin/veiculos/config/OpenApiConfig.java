@@ -1,12 +1,18 @@
 package com.github.hfantin.veiculos.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.tags.Tag;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Configuration
 public class OpenApiConfig {
@@ -26,5 +32,25 @@ public class OpenApiConfig {
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer")
                                 .bearerFormat("JWT")));
+    }
+
+    @Bean
+    public OpenApiCustomizer globalCustomizer() {
+        return openApi -> {
+            // Ordenar tags
+            if (openApi.getTags() != null) {
+                openApi.setTags(openApi.getTags()
+                        .stream()
+                        .sorted(Comparator.comparing(Tag::getName))
+                        .collect(Collectors.toList()));
+            }
+
+            // Ordenar paths
+            Paths sortedPaths = new Paths();
+            openApi.getPaths().keySet().stream()
+                    .sorted()
+                    .forEach(path -> sortedPaths.addPathItem(path, openApi.getPaths().get(path)));
+            openApi.setPaths(sortedPaths);
+        };
     }
 }

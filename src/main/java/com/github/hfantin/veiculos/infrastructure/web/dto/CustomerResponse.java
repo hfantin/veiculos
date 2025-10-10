@@ -13,14 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerResponse {
-    private Integer id;
-    private String authId;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
-    private CustomerType type;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String cpf;
 }

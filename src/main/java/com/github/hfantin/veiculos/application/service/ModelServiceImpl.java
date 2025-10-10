@@ -49,25 +49,12 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public boolean modelExists(Integer brandId, String name) {
-        return modelRepository.existsByBrandIdAndName(brandId, name);
-    }
-
-    @Override
     public void deleteModel(Integer id) {
         if (!modelRepository.existsById(id)) {
             throw new IllegalArgumentException("Model not found with id: " + id);
         }
         modelRepository.deleteById(id);
     }
-
-    @Override
-    @Transactional(readOnly = true)
-    public long countModels() {
-        return modelRepository.count();
-    }
-
 
     @Override
     @Transactional(readOnly = true)

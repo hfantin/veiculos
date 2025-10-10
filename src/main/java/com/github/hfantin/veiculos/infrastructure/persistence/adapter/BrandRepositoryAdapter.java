@@ -70,8 +70,4 @@ public class BrandRepositoryAdapter implements BrandRepository {
         brandJpaRepository.deleteById(id);
     }
 
-    @Override
-    public long count() {
-        return brandJpaRepository.count();
-    }
 }

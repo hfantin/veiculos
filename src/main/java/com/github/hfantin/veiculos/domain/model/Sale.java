@@ -22,6 +22,7 @@ public class Sale {
     private String transactionId;
     private SaleStatus status;
     private LocalDateTime createdAt;
+    private String link;
 
     public Sale(Integer customerId, BigDecimal totalAmount) {
         this.customerId = customerId;

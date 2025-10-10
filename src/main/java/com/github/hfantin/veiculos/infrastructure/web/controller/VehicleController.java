@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vehicles")
-@Tag(name = "Vehicles", description = "API para gerenciamento de veículos")
+@Tag(name = "4 - Veículos", description = "API para gerenciamento de veículos")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @SecurityRequirement(name = "bearerAuth")
@@ -71,33 +71,24 @@ public class VehicleController {
     })
     public ResponseEntity<VehicleResponse> getVehicleById(
             @Parameter(description = "ID do veículo", example = "1", required = true)
-            @PathVariable Integer id) {
-
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "true") boolean withDetails) {
+        if (withDetails) {
+            return vehicleService.getVehicleByIdWithDetails(id)
+                    .map(vehicle -> ResponseEntity.ok(vehicleWebMapper.toResponse(vehicle)))
+                    .orElse(ResponseEntity.notFound().build());
+        }
         return vehicleService.getVehicleById(id)
                 .map(vehicle -> ResponseEntity.ok(vehicleWebMapper.toResponse(vehicle)))
                 .orElse(ResponseEntity.notFound().build());
-    }
 
-    @GetMapping("/{id}/with-details")
-    @Operation(summary = "Buscar veículo por ID com detalhes", description = "Retorna os detalhes de um veículo incluindo modelo e marca")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Veículo encontrado"),
-            @ApiResponse(responseCode = "404", description = "Veículo não encontrado")
-    })
-    public ResponseEntity<VehicleResponse> getVehicleByIdWithDetails(
-            @Parameter(description = "ID do veículo", example = "1", required = true)
-            @PathVariable Integer id) {
-
-        return vehicleService.getVehicleByIdWithDetails(id)
-                .map(vehicle -> ResponseEntity.ok(vehicleWebMapper.toResponse(vehicle)))
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os veículos", description = "Retorna uma lista de todos os veículos cadastrados")
     public ResponseEntity<List<VehicleResponse>> getAllVehicles(
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
         List<VehicleResponse> vehicles;
         if (withDetails) {
@@ -118,20 +109,13 @@ public class VehicleController {
     public ResponseEntity<List<VehicleResponse>> getVehiclesByStatus(
             @Parameter(description = "Status do veículo", example = "AVAILABLE", required = true)
             @PathVariable VehicleStatus status,
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
-
-        List<VehicleResponse> vehicles;
-        if (withDetails) {
-            vehicles = vehicleService.getVehiclesByStatusWithDetails(status).stream()
-                    .map(vehicleWebMapper::toResponse)
-                    .collect(Collectors.toList());
-        } else {
-            vehicles = vehicleService.getVehiclesByStatus(status).stream()
-                    .map(vehicleWebMapper::toResponse)
-                    .collect(Collectors.toList());
-        }
+        List<VehicleResponse> vehicles = vehicleService.getVehiclesByStatus(status, withDetails)
+                .stream()
+                .map(vehicleWebMapper::toResponse)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(vehicles);
     }
@@ -142,8 +126,8 @@ public class VehicleController {
             @Parameter(description = "ID do modelo", example = "1", required = true)
             @PathVariable Integer modelId,
 
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
         List<VehicleResponse> vehicles;
         if (withDetails) {
@@ -165,8 +149,8 @@ public class VehicleController {
             @Parameter(description = "ID da marca", example = "1", required = true)
             @PathVariable Integer brandId,
 
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
         List<VehicleResponse> vehicles;
         if (withDetails) {
@@ -191,8 +175,8 @@ public class VehicleController {
             @Parameter(description = "Preço máximo", example = "50000.00", required = true)
             @RequestParam BigDecimal maxPrice,
 
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
         List<VehicleResponse> vehicles;
         if (withDetails) {
@@ -217,8 +201,8 @@ public class VehicleController {
             @Parameter(description = "Ano final", example = "2024", required = true)
             @RequestParam Integer endYear,
 
-            @Parameter(description = "Incluir detalhes de modelo e marca", example = "false")
-            @RequestParam(defaultValue = "false") boolean withDetails) {
+            @Parameter(description = "Incluir detalhes de modelo e marca", example = "true")
+            @RequestParam(defaultValue = "true") boolean withDetails) {
 
         List<VehicleResponse> vehicles;
         if (withDetails) {
@@ -264,51 +248,6 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleWebMapper.toResponse(updatedVehicle));
     }
 
-    @PostMapping("/{id}/purchase")
-    @Operation(summary = "Comprar um veículo", description = "Marca um veículo como vendido")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Veículo comprado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Veículo não encontrado")
-    })
-    public ResponseEntity<VehicleResponse> purchaseVehicle(
-            @Parameter(description = "ID do veículo", example = "1", required = true)
-            @PathVariable Integer id,
-
-            @Parameter(description = "ID do cliente", example = "1", required = true)
-            @RequestParam Integer customerId) {
-
-        var purchasedVehicle = vehicleService.purchaseVehicle(id, customerId);
-        return ResponseEntity.ok(vehicleWebMapper.toResponse(purchasedVehicle));
-    }
-
-    @PostMapping("/{id}/reserve")
-    @Operation(summary = "Reservar um veículo", description = "Marca um veículo como reservado")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Veículo reservado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Veículo não encontrado")
-    })
-    public ResponseEntity<VehicleResponse> reserveVehicle(
-            @Parameter(description = "ID do veículo", example = "1", required = true)
-            @PathVariable Integer id) {
-
-        var reservedVehicle = vehicleService.reserveVehicle(id);
-        return ResponseEntity.ok(vehicleWebMapper.toResponse(reservedVehicle));
-    }
-
-    @PostMapping("/{id}/available")
-    @Operation(summary = "Disponibilizar um veículo", description = "Marca um veículo como disponível")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Veículo disponibilizado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Veículo não encontrado")
-    })
-    public ResponseEntity<VehicleResponse> makeVehicleAvailable(
-            @Parameter(description = "ID do veículo", example = "1", required = true)
-            @PathVariable Integer id) {
-
-        var availableVehicle = vehicleService.makeVehicleAvailable(id);
-        return ResponseEntity.ok(vehicleWebMapper.toResponse(availableVehicle));
-    }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar um veículo", description = "Remove um veículo do sistema")
     @ApiResponses({
@@ -323,9 +262,4 @@ public class VehicleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/count")
-    @Operation(summary = "Contar total de veículos", description = "Retorna o número total de veículos cadastrados")
-    public ResponseEntity<Long> countVehicles() {
-        return ResponseEntity.ok(vehicleService.countVehicles());
-    }
 }

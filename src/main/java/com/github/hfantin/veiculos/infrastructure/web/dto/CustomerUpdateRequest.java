@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class CustomerUpdateRequest {
     private String phone;
     private String address;
-    private CustomerType type;
+    private String cpf;
 }

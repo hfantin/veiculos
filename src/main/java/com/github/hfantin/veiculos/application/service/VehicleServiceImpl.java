@@ -71,14 +71,12 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Vehicle> getVehiclesByStatus(VehicleStatus status) {
+    public List<Vehicle> getVehiclesByStatus(VehicleStatus status, boolean withDetails) {
+        if(withDetails) {
+            return vehicleRepository.findByStatusWithDetails(status);
+        }
         return vehicleRepository.findByStatus(status);
-    }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Vehicle> getVehiclesByStatusWithDetails(VehicleStatus status) {
-        return vehicleRepository.findByStatusWithDetails(status);
     }
 
     @Override
@@ -130,36 +128,6 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle purchaseVehicle(Integer id, Integer customerId) {
-        return vehicleRepository.findById(id)
-                .map(vehicle -> {
-                    vehicle.markAsSold();
-                    return vehicleRepository.save(vehicle);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with id: " + id));
-    }
-
-    @Override
-    public Vehicle reserveVehicle(Integer id) {
-        return vehicleRepository.findById(id)
-                .map(vehicle -> {
-                    vehicle.reserve();
-                    return vehicleRepository.save(vehicle);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with id: " + id));
-    }
-
-    @Override
-    public Vehicle makeVehicleAvailable(Integer id) {
-        return vehicleRepository.findById(id)
-                .map(vehicle -> {
-                    vehicle.makeAvailable();
-                    return vehicleRepository.save(vehicle);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Vehicle not found with id: " + id));
-    }
-
-    @Override
     public void deleteVehicle(Integer id) {
         if (!vehicleRepository.existsById(id)) {
             throw new IllegalArgumentException("Vehicle not found with id: " + id);
@@ -168,16 +136,9 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public long countVehicles() {
-        return vehicleRepository.count();
-    }
-
-    @Override
-    public Optional<Vehicle> findById(Integer id) { // ✅ IMPLEMENTAR
+    public Optional<Vehicle> findById(Integer id) {
         return vehicleRepository.findById(id);
     }
-
 
     @Override
     public Vehicle update(Vehicle vehicle) {

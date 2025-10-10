@@ -1,6 +1,7 @@
 package com.github.hfantin.veiculos.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,13 +12,17 @@ import org.springframework.security.oauth2.client.web.DefaultOAuth2Authorization
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final UserValidationFilter userValidationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
@@ -26,7 +31,7 @@ public class SecurityConfig {
         // Create the default resolver
         DefaultOAuth2AuthorizationRequestResolver defaultResolver =
                 new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository,
-                        "/oauth2/authorization"); // this is OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI
+                        "/oauth2/authorization");
 
         // Wrap it
         OAuth2AuthorizationRequestResolver customResolver = new OAuth2AuthorizationRequestResolver() {
@@ -78,9 +83,10 @@ public class SecurityConfig {
                         })
                 )
                 .cors(cors -> {})
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {}));
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {}))
+                // Adiciona o filtro personalizado após a autenticação
+                .addFilterAfter(userValidationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

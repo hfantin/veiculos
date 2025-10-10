@@ -20,32 +20,15 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand createBrand(Brand brand) {
-        brand.validate();
-
-        if (brandRepository.existsByName(brand.getName())) {
-            throw new IllegalArgumentException("Brand with name '" + brand.getName() + "' already exists");
-        }
-
-        return brandRepository.save(brand);
+    @Transactional(readOnly = true)
+    public List<Brand> getAllBrands() {
+        return brandRepository.findAll();
     }
 
     @Override
-    public Brand updateBrand(Integer id, Brand brand) {
-        brand.validate();
-
-        return brandRepository.findById(id)
-                .map(existingBrand -> {
-                    // Check if new name conflicts with other brands
-                    if (!existingBrand.getName().equals(brand.getName()) &&
-                            brandRepository.existsByName(brand.getName())) {
-                        throw new IllegalArgumentException("Brand with name '" + brand.getName() + "' already exists");
-                    }
-
-                    existingBrand.setName(brand.getName());
-                    return brandRepository.save(existingBrand);
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Brand not found with id: " + id));
+    @Transactional(readOnly = true)
+    public List<Brand> getAllBrandsOrderedByName() {
+        return brandRepository.findAllOrderedByName();
     }
 
     @Override
@@ -61,21 +44,27 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Brand> getAllBrands() {
-        return brandRepository.findAll();
+    public Brand createBrand(Brand brand) {
+        brand.validate();
+        if (brandRepository.existsByName(brand.getName())) {
+            throw new IllegalArgumentException("Brand with name '" + brand.getName() + "' already exists");
+        }
+        return brandRepository.save(brand);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Brand> getAllBrandsOrderedByName() {
-        return brandRepository.findAllOrderedByName();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean brandExists(String name) {
-        return brandRepository.existsByName(name);
+    public Brand updateBrand(Integer id, Brand brand) {
+        brand.validate();
+        return brandRepository.findById(id)
+                .map(existingBrand -> {
+                    if (!existingBrand.getName().equals(brand.getName()) &&
+                            brandRepository.existsByName(brand.getName())) {
+                        throw new IllegalArgumentException("Brand with name '" + brand.getName() + "' already exists");
+                    }
+                    existingBrand.setName(brand.getName());
+                    return brandRepository.save(existingBrand);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Brand not found with id: " + id));
     }
 
     @Override
@@ -86,9 +75,4 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public long countBrands() {
-        return brandRepository.count();
-    }
 }

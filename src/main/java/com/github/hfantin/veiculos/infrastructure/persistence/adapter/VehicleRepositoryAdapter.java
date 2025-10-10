@@ -133,9 +133,4 @@ public class VehicleRepositoryAdapter implements VehicleRepository {
     public void deleteById(Integer id) {
         vehicleJpaRepository.deleteById(id);
     }
-
-    @Override
-    public long count() {
-        return vehicleJpaRepository.count();
-    }
 }

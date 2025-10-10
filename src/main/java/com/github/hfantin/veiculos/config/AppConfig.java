@@ -17,4 +17,5 @@ public class AppConfig {
     private String name;
     private String version;
     private String description;
+    private String baseUrl;
 }
