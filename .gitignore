@@ -34,4 +34,4 @@ build/
 
 src/main/resources/application-dev.properties
 /.env
-/ngrok.md
+.local/
