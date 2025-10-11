@@ -1,10 +1,12 @@
 # TRABALHO SUB TECH CHALLENGE CURSO SOAT – PÓSTECH
 
-## Diagrama de arquitetura
+## Diagramas
+
+### arquitetura
 
 ![arquitetura](docs/arquitetura.png)
 
-## banco de dados
+### Banco de dados
 
 ![bd.png](docs/banco-de-dados.png)
 
@@ -39,43 +41,44 @@
     # auth
     okta.oauth2.client-id=
     okta.oauth2.client-secret=
-    
     # DB
     spring.datasource.url=jdbc:postgresql://localhost:5432/veiculos_db
     spring.datasource.username=admin
     spring.datasource.password=123456
+    # servidor smtp - email
+    spring.mail.username=
+    spring.mail.password=
+    # mercado pago
+    mercadopago.access-token=
+    mercadopago.base-url=https://api.mercadopago.com
    ```
 
 obs.: habilitar perfil dev para sobrescrever as configurações em application.properties, incluindo a propriedade **spring.profiles.active=dev** ou no script de execução - ./mvnw spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"
 
-2. criar novo arquivo .env com o seguinte conteúdo:
+2. criar novo arquivo .env que será utilizado pelo docker-compose com o seguinte conteúdo:
 
 ```
 DB_USERNAME=admin
 DB_PASSWORD=123456
 DB_NAME=veiculos_db
+AUTH0_CLIENT_ID=
+AUTH0_CLIENT_SECRET=
+EMAIL_SENDER_FROM=
+EMAIL_SENDER_PASSWORD=
+MERCADO_LIVRE_KEY=
+MERCADO_LIVRE_PASS=
 ```
 
 3. criar rede do docker com comando abaixo:
-   > docker network create localnet
+> docker network create localnet
 
 4. executar docker compose:
-   > docker compose up -d
+> docker compose up -d
 
 5. acessar endereço do frontend: http://localhost:8080
 
 ### API 
 - [swagger](http://localhost:8080/swagger-ui/index.html)
-
-### emails
-backstagefood6@gmail.com
-
-### LINKS
-- auth0 - https://auth0.com/docs/quickstart/backend/java-spring-security5/01-authorization
-- auth0 com google - https://auth0.com/docs/quickstart/webapp/java-spring-boot/interactive
-- mercado pago - https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/create-application
-- mercado pago devs - https://www.mercadopago.com.br/developers/pt
-- gmail senha de app - https://myaccount.google.com/apppasswords
 
 ## webhook do mercado pago com ngrok
 - instalar
