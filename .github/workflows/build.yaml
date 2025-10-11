@@ -1,4 +1,4 @@
-name: Build, Tag and Release Spring Boot App
+name: Build, Tag, Release, and Publish Docker Image
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write   # ✅ allows pushing tags and creating releases
+  contents: write
   packages: write
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # needed to create tags and check existing ones
+          fetch-depth: 0
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -58,6 +58,16 @@ jobs:
 
       - name: Build JAR
         run: mvn clean package -DskipTests
+
+      - name: Build and push Docker image
+        env:
+          IMAGE_NAME: ghcr.io/${{ github.repository }}  # ghcr.io/hfantin/veiculos
+          VERSION: ${{ steps.extract_version.outputs.version }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:$VERSION
+          docker push $IMAGE_NAME:latest
 
       - name: Create git tag
         run: |
