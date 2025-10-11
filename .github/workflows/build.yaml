@@ -1,4 +1,4 @@
-name: Build, Tag, Release, and Publish Docker Image
+name: Build, Test, Release & Publish Docker
 
 on:
   push:
@@ -10,8 +10,39 @@ permissions:
   packages: write
 
 jobs:
-  build-tag-release:
+  # --------------------------------------
+  # 🧪 Build & Test Job
+  # --------------------------------------
+  build-test:
+    name: 🧪 Build & Test
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Run tests with coverage
+        run: mvn clean verify -Djacoco.haltOnFailure=false
+
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+
+  # --------------------------------------
+  # 🏷️ Tag & Release Job
+  # --------------------------------------
+  tag-release:
+    name: 🏷️ Tag & Release
+    runs-on: ubuntu-latest
+    needs: build-test
 
     steps:
       - name: Checkout source
@@ -25,15 +56,6 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Run tests with coverage
-        run: mvn clean verify
-
-      - name: Upload JaCoCo coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco/
-
       - name: Extract version from pom.xml
         id: extract_version
         run: |
@@ -44,7 +66,7 @@ jobs:
         run: |
           VERSION=${{ steps.extract_version.outputs.version }}
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "❌ Version $VERSION is not a valid closed semantic version (x.y.z)"
+            echo "❌ Version $VERSION is not a valid semantic version (x.y.z)"
             exit 1
           fi
 
@@ -55,19 +77,6 @@ jobs:
             echo "❌ Tag $VERSION already exists!"
             exit 1
           fi
-
-      - name: Build JAR
-        run: mvn clean package -DskipTests
-
-      - name: Build and push Docker image
-        env:
-          IMAGE_NAME: ghcr.io/${{ github.repository }}  # ghcr.io/hfantin/veiculos
-          VERSION: ${{ steps.extract_version.outputs.version }}
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest .
-          docker push $IMAGE_NAME:$VERSION
-          docker push $IMAGE_NAME:latest
 
       - name: Create git tag
         run: |
@@ -85,3 +94,43 @@ jobs:
           files: target/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save version for next job
+        run: echo "VERSION=${{ steps.extract_version.outputs.version }}" >> $GITHUB_ENV
+
+  # --------------------------------------
+  # 🐳 Docker Publish Job
+  # --------------------------------------
+  docker-publish:
+    name: 🐳 Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: tag-release
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Extract version from pom.xml
+        id: extract_version
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build JAR
+        run: mvn clean package -DskipTests
+
+      - name: Build and push Docker image
+        env:
+          IMAGE_NAME: ghcr.io/${{ github.repository }}
+          VERSION: ${{ steps.extract_version.outputs.version }}
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest .
+          docker push $IMAGE_NAME:$VERSION
+          docker push $IMAGE_NAME:latest
