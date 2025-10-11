@@ -51,10 +51,11 @@ O time de qualidade de operação definiu que todas as mudanças da solução (i
 - [x] crud das tabela sale_vehicle
 - [x] enviar email para usuario quando iniciar uma nova compra na api /api/vehicle-sales/initiate e quando completar ou cancelar
 - [x] lógica para registro e autorização de compradores deve ser feito de forma separada
+- [x] Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro
+- [x] Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro
 - [ ] excluir endpoints que não serão utilizados, bem como toda a estrutura
+- [ ] revisar respostas dos endpoints
 - [ ] UTF-8
-- [ ] Listagem de veículos à venda, ordenada por preço, do mais barato para o mais caro
-- [ ] Listagem de veículos vendidos, ordenada por preço, do mais barato para o mais caro
 - [ ] criar perfis de usuario: administrador e cliente(não pode alterar tabelas)
 - [ ] o processo de compilação no github deve gerar imagem docker
 - [ ] testes unitários e de integração 
