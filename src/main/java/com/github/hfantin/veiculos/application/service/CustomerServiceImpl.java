@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .email(email)
                 .firstName(firstName)
                 .lastName(lastName)
-                .type(CustomerType.BUYER)
+                .type(CustomerType.USER)
                 .validated(false)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

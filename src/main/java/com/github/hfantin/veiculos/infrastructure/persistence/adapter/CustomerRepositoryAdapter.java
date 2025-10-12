@@ -62,25 +62,5 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
         return customerJpaRepository.existsById(id);
     }
 
-    @Override
-    public boolean existsByAuthId(String authId) {
-        return customerJpaRepository.existsByAuthId(authId);
-    }
 
-    @Override
-    public boolean existsByEmail(String email) {
-        return customerJpaRepository.existsByEmail(email);
-    }
-
-    @Override
-    public List<Customer> findByType(CustomerType type) {
-        return customerJpaRepository.findByType(type).stream()
-                .map(customerMapper::toDomain)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public long count() {
-        return customerJpaRepository.count();
-    }
 }

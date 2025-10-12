@@ -78,7 +78,7 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
             String dadosVeiculo = String.format("%s - R$ %.2f", descricaoVeiculo, vehicle.getPrice());
             emailService.sendReserved(customer.getEmail(), customer.getFirstName(), link, dadosVeiculo);
         } catch (MessagingException e) {
-            log.error("não foi possível enviar o email", e.getNextException(), e);
+            log.error("não foi possível enviar o email {}", e.getNextException(), e);
         } catch (Exception e) {
             log.error("não foi possível obter o link ou enviar email: {}", e.getMessage(), e);
         }

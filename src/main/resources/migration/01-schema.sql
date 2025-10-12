@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS customers (
     address TEXT NULL,
     cpf VARCHAR(11) NULL,
     validated BOOL DEFAULT false,
-    type VARCHAR(20) DEFAULT 'BUYER' CHECK (type IN ('BUYER', 'SELLER', 'BOTH')),
+    type VARCHAR(20) DEFAULT 'USER' CHECK (type IN ('USER', 'ADMIN')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

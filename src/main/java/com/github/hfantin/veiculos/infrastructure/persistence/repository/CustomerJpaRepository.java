@@ -13,8 +13,5 @@ public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, Int
 
     Optional<CustomerEntity> findByAuthId(String authId);
     Optional<CustomerEntity> findByEmail(String email);
-    boolean existsByAuthId(String authId);
-    boolean existsByEmail(String email);
-    List<CustomerEntity> findByType(CustomerType type);
-    boolean existsById(Long id);
+        boolean existsById(Long id);
 }
