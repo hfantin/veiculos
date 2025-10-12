@@ -32,7 +32,7 @@ public class Customer {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.type = CustomerType.BUYER;
+        this.type = CustomerType.USER;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

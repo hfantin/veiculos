@@ -47,7 +47,7 @@ public class MercadoPagoController {
             @RequestParam("preference_id") String preferenceId) {
         vehicleSaleService.completeSale(Integer.valueOf(externalReference), merchantOrderId, paymentType);
         return ResponseEntity.ok(Map.of(
-                "msg", "pagamento aprovado com sucesso",
+                "msg", "pagamento aprovado com sucesso!",
                 "collectionId", collectionId,
                 "status", collectionStatus,
                 "saleId", externalReference,
@@ -62,8 +62,9 @@ public class MercadoPagoController {
             @RequestParam(value = "external_reference", required = false) String externalReference,
             @RequestParam(value = "collection_status", required = false) String collectionStatus) {
 
+        vehicleSaleService.cancelSale(Integer.valueOf(externalReference));
         return ResponseEntity.ok(Map.of(
-                "msg", "pagamento rejeitado :(",
+                "msg", "pagamento rejeitado.",
                 "saleId", externalReference,
                 "status", collectionStatus));
     }
@@ -75,7 +76,7 @@ public class MercadoPagoController {
             @RequestParam("preference_id") String preferenceId) {
 
         return ResponseEntity.ok(Map.of(
-                "msg", "pagamento pendente",
+                "msg", "pagamento pendente.",
                 "saleId", externalReference,
                 "status", collectionStatus,
                 "preferenceId", preferenceId

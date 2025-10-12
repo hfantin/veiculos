@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:143.0) Gecko/20100101 Firefox/143.0" version="28.0.3">
+  <diagram name="Page-1" id="0_1HBZqwKf6FuM9R-bYd">
+    <mxGraphModel dx="1387" dy="493" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-1" value="Serviços externos" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="740" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-4" value="Envio de emails&lt;br&gt;SMTP" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#8e24aa;" vertex="1" parent="sroZeLDoB-8JMCB5YNTx-1">
+          <mxGeometry x="570" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-2" value="&lt;div&gt;Autenticação&lt;/div&gt;&lt;div&gt;Auth0&lt;/div&gt;" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#8e24aa;" vertex="1" parent="sroZeLDoB-8JMCB5YNTx-1">
+          <mxGeometry x="60" y="100" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-3" value="&lt;div&gt;Pagamentos&lt;/div&gt;&lt;div&gt;MercadoPago&lt;/div&gt;" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#8e24aa;" vertex="1" parent="sroZeLDoB-8JMCB5YNTx-1">
+          <mxGeometry x="300" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-5" value="Aplicação" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="260" width="740" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-6" value="API de veículos&lt;br&gt;Java/spingboot" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#0288d1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="290" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-7" value="Dados" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="740" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-8" value="&lt;div&gt;Banco de dados&lt;/div&gt;&lt;div&gt;PostgreSQL&lt;/div&gt;" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#e8f5e8;strokeColor=#388e3c;" vertex="1" parent="1">
+          <mxGeometry x="340" y="430" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-9" value="&lt;div&gt;Clientes&lt;/div&gt;&lt;div&gt;Web e Mobile&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#f57c00;" vertex="1" parent="1">
+          <mxGeometry x="350" y="560" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-10" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;strokeColor=#666666;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-9" target="sroZeLDoB-8JMCB5YNTx-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="560" as="sourcePoint" />
+            <mxPoint x="450" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-11" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-9" target="sroZeLDoB-8JMCB5YNTx-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="560" as="sourcePoint" />
+            <mxPoint x="400" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-12" value="Validação de JWT" style="endArrow=classic;html=1;rounded=0;dashed=1;strokeColor=#666666;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-2" target="sroZeLDoB-8JMCB5YNTx-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="120" as="sourcePoint" />
+            <mxPoint x="320" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-13" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-6" target="sroZeLDoB-8JMCB5YNTx-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="350" as="sourcePoint" />
+            <mxPoint x="400" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-14" value="Payment Requests" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-6" target="sroZeLDoB-8JMCB5YNTx-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="320" as="sourcePoint" />
+            <mxPoint x="440" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-15" value="&lt;div&gt;Confirmação de pagamentos&lt;/div&gt;" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-3" target="sroZeLDoB-8JMCB5YNTx-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="160" as="sourcePoint" />
+            <mxPoint x="400" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sroZeLDoB-8JMCB5YNTx-16" value="Envio de notificações" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sroZeLDoB-8JMCB5YNTx-6" target="sroZeLDoB-8JMCB5YNTx-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="320" as="sourcePoint" />
+            <mxPoint x="620" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

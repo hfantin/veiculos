@@ -12,10 +12,6 @@ public interface CustomerRepository {
     Optional<Customer> findByAuthId(String authId);
     Optional<Customer> findByEmail(String email);
     List<Customer> findAll();
-    List<Customer> findByType(CustomerType type);
-    boolean existsByAuthId(String authId);
-    boolean existsByEmail(String email);
     boolean existsById(Integer id);
     void deleteById(Integer id);
-    long count();
 }

@@ -28,7 +28,7 @@ class CustomerTest {
         assertEquals(firstName, customer.getFirstName());
         assertEquals(lastName, customer.getLastName());
         assertEquals(email, customer.getEmail());
-        assertEquals(CustomerType.BUYER, customer.getType());
+        assertEquals(CustomerType.USER, customer.getType());
         assertNotNull(customer.getCreatedAt());
         assertNotNull(customer.getUpdatedAt());
     }

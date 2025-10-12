@@ -24,7 +24,7 @@ class CustomerMapperTest {
                 .email("joao.silva@email.com")
                 .phone("11999999999")
                 .address("Rua ABC, 123")
-                .type(CustomerType.BUYER)
+                .type(CustomerType.USER)
                 .createdAt(LocalDateTime.of(2024, 1, 1, 10, 0))
                 .updatedAt(LocalDateTime.of(2024, 1, 2, 10, 0))
                 .build();
@@ -41,7 +41,7 @@ class CustomerMapperTest {
         assertEquals("joao.silva@email.com", entity.getEmail());
         assertEquals("11999999999", entity.getPhone());
         assertEquals("Rua ABC, 123", entity.getAddress());
-        assertEquals(CustomerType.BUYER, entity.getType());
+        assertEquals(CustomerType.USER, entity.getType());
         assertEquals(LocalDateTime.of(2024, 1, 1, 10, 0), entity.getCreatedAt());
         assertEquals(LocalDateTime.of(2024, 1, 2, 10, 0), entity.getUpdatedAt());
     }
@@ -57,7 +57,7 @@ class CustomerMapperTest {
         entity.setEmail("joao.silva@email.com");
         entity.setPhone("11999999999");
         entity.setAddress("Rua ABC, 123");
-        entity.setType(CustomerType.BUYER);
+        entity.setType(CustomerType.USER);
         entity.setCreatedAt(LocalDateTime.of(2024, 1, 1, 10, 0));
         entity.setUpdatedAt(LocalDateTime.of(2024, 1, 2, 10, 0));
 
@@ -73,7 +73,7 @@ class CustomerMapperTest {
         assertEquals("joao.silva@email.com", customer.getEmail());
         assertEquals("11999999999", customer.getPhone());
         assertEquals("Rua ABC, 123", customer.getAddress());
-        assertEquals(CustomerType.BUYER, customer.getType());
+        assertEquals(CustomerType.USER, customer.getType());
         assertEquals(LocalDateTime.of(2024, 1, 1, 10, 0), customer.getCreatedAt());
         assertEquals(LocalDateTime.of(2024, 1, 2, 10, 0), customer.getUpdatedAt());
     }

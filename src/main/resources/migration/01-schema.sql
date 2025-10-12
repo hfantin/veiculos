@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS brands (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
 CREATE TABLE IF NOT EXISTS models (
     id SERIAL PRIMARY KEY,
     brand_id INTEGER NOT NULL REFERENCES brands(id) ON DELETE CASCADE,
@@ -30,7 +29,6 @@ CREATE INDEX IF NOT EXISTS idx_vehicles_status ON vehicles(status);
 CREATE INDEX IF NOT EXISTS idx_vehicles_price ON vehicles(price);
 CREATE INDEX IF NOT EXISTS idx_vehicles_model_id ON vehicles(model_id);
 
-
 CREATE TABLE IF NOT EXISTS customers (
     id SERIAL PRIMARY KEY,
     auth_id VARCHAR(255) NOT NULL UNIQUE, -- ID do serviço externo de autenticação
@@ -41,7 +39,7 @@ CREATE TABLE IF NOT EXISTS customers (
     address TEXT NULL,
     cpf VARCHAR(11) NULL,
     validated BOOL DEFAULT false,
-    type VARCHAR(20) DEFAULT 'BUYER' CHECK (type IN ('BUYER', 'SELLER', 'BOTH')),
+    type VARCHAR(20) DEFAULT 'USER' CHECK (type IN ('USER', 'ADMIN')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -50,7 +48,6 @@ CREATE TABLE IF NOT EXISTS customers (
 CREATE INDEX IF NOT EXISTS idx_customers_auth_id ON customers(auth_id);
 CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email);
 CREATE INDEX IF NOT EXISTS idx_customers_type ON customers(type);
-
 
 CREATE TABLE IF NOT EXISTS sales (
     id SERIAL PRIMARY KEY,
@@ -62,12 +59,10 @@ CREATE TABLE IF NOT EXISTS sales (
     status VARCHAR(20) DEFAULT 'COMPLETED' CHECK (status IN ('PENDING', 'COMPLETED', 'CANCELLED')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 -- Índices
 CREATE INDEX IF NOT EXISTS idx_sales_customer_id ON sales(customer_id);
 CREATE INDEX IF NOT EXISTS idx_sales_date ON sales(sale_date);
 CREATE INDEX IF NOT EXISTS idx_sales_status ON sales(status);
-
 
 CREATE TABLE IF NOT EXISTS sale_vehicles (
     id SERIAL PRIMARY KEY,
