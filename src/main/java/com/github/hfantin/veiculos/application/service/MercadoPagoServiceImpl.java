@@ -36,12 +36,9 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
                 .build();
         List<PreferenceItemRequest> items = List.of(itemRequest);
         // Configurar o pagador (opcional para testes)
-        PreferencePayerRequest payer = null;
-        if (request.emailComprador() != null) {
-            payer = PreferencePayerRequest.builder()
-                    .email(request.emailComprador())
-                    .build();
-        }
+        PreferencePayerRequest payer = PreferencePayerRequest.builder()
+                .email("test_user_2015019015367683147@testuser.com") // email do comprador de testes do mercado pago
+                .build();
 
         // Criar a requisição da preferência
         PreferenceRequest preferenceRequest = PreferenceRequest.builder()
@@ -60,8 +57,11 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
         // Criar a preferência
         Preference preference = client.create(preferenceRequest);
 
+        log.info("sandboxInitPoint={}", preference.getSandboxInitPoint());
+        log.info("initPoint={}", preference.getInitPoint());
+
         return new PagamentoResponse(
-                preference.getSandboxInitPoint(),
+                preference.getInitPoint(),
                 preference.getId(),
                 "created"
         );
@@ -73,12 +73,13 @@ public class MercadoPagoServiceImpl implements MercadoPagoService {
             try {
                 PaymentClient paymentClient = new PaymentClient();
                 Payment payment = paymentClient.get(Long.parseLong(idPagamento));
-                log.info("💳 Pagamento ID: {}", payment.getId());
-                log.info("💰 Valor: {}", payment.getTransactionAmount());
-                log.info("📧 Comprador: {}", payment.getPayer().getEmail());
-                log.info("📦 Status: {}", payment.getStatus());
-                log.info("📝 Status detail: {}", payment.getStatusDetail());
+                log.info("Pagamento ID: {}", payment.getId());
+                log.info("Valor: {}", payment.getTransactionAmount());
+                log.info("Comprador: {}", payment.getPayer().getEmail());
+                log.info("Status: {}", payment.getStatus());
+                log.info("Status detail: {}", payment.getStatusDetail());
                 log.info("idPedidoVenda: {}", payment.getExternalReference());
+                log.info("Operation Type: {}", payment.getOperationType());
 
                 return payment.getStatus();
 
