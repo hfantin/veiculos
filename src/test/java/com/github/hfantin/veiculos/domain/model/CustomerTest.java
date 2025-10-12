@@ -45,7 +45,7 @@ class CustomerTest {
                 .email("carlos@email.com")
                 .phone("11988887777")
                 .address("Av. Principal, 456")
-                .type(CustomerType.BOTH)
+                .type(CustomerType.USER)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -54,6 +54,6 @@ class CustomerTest {
         assertNotNull(customer);
         assertEquals(1, customer.getId());
         assertEquals("Carlos", customer.getFirstName());
-        assertEquals(CustomerType.BOTH, customer.getType());
+        assertEquals(CustomerType.USER, customer.getType());
     }
 }
