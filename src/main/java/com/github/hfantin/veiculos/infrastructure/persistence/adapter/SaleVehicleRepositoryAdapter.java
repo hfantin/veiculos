@@ -1,6 +1,7 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.adapter;
 
 import com.github.hfantin.veiculos.domain.model.SaleVehicle;
+import com.github.hfantin.veiculos.domain.model.SaleVehicleBrandModelVehicleDetails;
 import com.github.hfantin.veiculos.domain.repository.SaleVehicleRepository;
 import com.github.hfantin.veiculos.infrastructure.persistence.entity.SaleVehicleEntity;
 import com.github.hfantin.veiculos.infrastructure.persistence.repository.SaleVehicleJpaRepository;
@@ -71,4 +72,10 @@ public class SaleVehicleRepositoryAdapter implements SaleVehicleRepository {
 //        log.info("verifica se existe compra pendente de veiculo {}", saleVehicleEntity);
 //        return saleVehicleEntity.isPresent();
     }
+
+    @Override
+    public List<SaleVehicleBrandModelVehicleDetails> findAllByCustomerId(String customerId){
+        return saleVehicleJpaRepository.findAllByCustomeId(customerId).stream().map(saleVehicleEntityMapper::toDomainWithModelBrandVehicle).toList();
+    }
+    
 }

@@ -3,7 +3,9 @@ package com.github.hfantin.veiculos.infrastructure.web.controller;
 import com.github.hfantin.veiculos.domain.exception.BusinessException;
 import com.github.hfantin.veiculos.domain.model.Customer;
 import com.github.hfantin.veiculos.domain.model.Sale;
+import com.github.hfantin.veiculos.domain.model.SaleVehicleBrandModelVehicleDetails;
 import com.github.hfantin.veiculos.domain.service.CustomerService;
+import com.github.hfantin.veiculos.domain.service.SaleVehicleService;
 import com.github.hfantin.veiculos.domain.service.VehicleSaleService;
 import com.github.hfantin.veiculos.infrastructure.web.dto.InitiateSaleRequest;
 import com.github.hfantin.veiculos.infrastructure.web.dto.InitiateSaleResponse;
@@ -33,6 +35,8 @@ import java.util.List;
 public class VehicleSaleController {
 
     private final VehicleSaleService vehicleSaleService;
+
+    private final SaleVehicleService saleVehicleService;
 
     private final CustomerService customerService;
 
@@ -76,10 +80,10 @@ public class VehicleSaleController {
 
     @GetMapping("/vehicle")
     @Operation(summary = "3 - Lista veiculos do usuario logado", description = "veículos do usuario logado")
-    public ResponseEntity<List<Sale>> listar() {
-        Integer customerId = getCurrentCustomerId();
-        log.info("lista veiculos do usuario {}", customerId);
-        List<Sale> sales = vehicleSaleService.listSales(customerId);
+    public ResponseEntity<List<SaleVehicleBrandModelVehicleDetails>> listar() {
+        String authId = getAuthId();
+        log.info("lista veiculos do usuario {}", authId);
+        List<SaleVehicleBrandModelVehicleDetails> sales = saleVehicleService.findAllByCustomerId(authId);
         return ResponseEntity.ok(sales);
 
     }
@@ -89,12 +93,7 @@ public class VehicleSaleController {
      * A partir do contexto de segurança do Spring
      */
     private Integer getCurrentCustomerId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalStateException("Usuário não autenticado");
-        }
-
-        String authId = authentication.getName();
+        String authId = getAuthId();
         log.info("Current authenticated user: {}", authId);
         // Aqui você precisaria buscar o customer pelo authId (username)
         // Por enquanto, vamos simular retornando um ID fixo
@@ -106,5 +105,14 @@ public class VehicleSaleController {
 
         log.info("cliente logado: {}", customer);
         return customer.getId();
+    }
+
+    private String getAuthId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("Usuário não autenticado");
+        }
+
+        return authentication.getName();
     }
 }
