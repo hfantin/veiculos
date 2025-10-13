@@ -14,8 +14,11 @@ public interface SaleVehicleJpaRepository extends JpaRepository<SaleVehicleEntit
     Optional<SaleVehicleEntity> findByVehicleId(Integer vehicleId);
     boolean existsById(Integer id);
 
-    @Query("SELECT s FROM SaleVehicleEntity s JOIN FETCH s.sale t JOIN FETCH t.id WHERE t.status <> 'CANCELLED' AND s.vehicle.id = :vehicleId")
+    @Query("SELECT s FROM SaleVehicleEntity s JOIN FETCH s.sale t WHERE s.vehicle.id = :vehicleId and t.status <> 'CANCELLED'")
     Optional<SaleVehicleEntity> existsNotCancelledByVehicleId(Integer vehicleId);
+
+    @Query("SELECT s FROM SaleVehicleEntity s JOIN FETCH s.sale t JOIN FETCH t.customer c WHERE c.authId = :customerId")
+    List<SaleVehicleEntity> findAllByCustomeId(String customerId);
 
     boolean existsByVehicleId(Integer vehicleId);
 }

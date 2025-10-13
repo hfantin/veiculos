@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface SaleJpaRepository extends JpaRepository<SaleEntity, Integer> {
     List<SaleEntity> findByCustomerId(Integer customerId);
+    List<SaleEntity> findAllByCustomerId(Integer customerId);
     boolean existsById(Integer id);
 }
