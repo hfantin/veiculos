@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class BrandController {
         this.brandWebMapper = brandWebMapper;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Criar uma nova marca", description = "Cria uma nova marca de veículo no sistema")
     @ApiResponses({
@@ -89,6 +91,7 @@ public class BrandController {
         return ResponseEntity.ok(brands);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar uma marca", description = "Atualiza os dados de uma marca existente")
     @ApiResponses({
@@ -105,6 +108,7 @@ public class BrandController {
         return ResponseEntity.ok(brandWebMapper.toResponse(updatedBrand));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar uma marca", description = "Remove uma marca do sistema")
     @ApiResponses({

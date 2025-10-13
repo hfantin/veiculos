@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/api/sales")
+@PreAuthorize("hasRole('ADMIN')")
 @AllArgsConstructor
 @Tag(name = "Vendas", description = "API para gerenciamento de vendas")
 public class SaleController {
 
     private final SaleService saleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @Operation(summary = "Criar uma nova venda", description = "Cadastra uma nova venda no sistema")
     @ApiResponses(value = {

@@ -23,6 +23,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/vehicle-sales")
@@ -68,6 +70,17 @@ public class VehicleSaleController {
 
         vehicleSaleService.cancelSale(saleId);
         return ResponseEntity.ok().build();
+
+    }
+
+
+    @GetMapping("/vehicle")
+    @Operation(summary = "3 - Lista veiculos do usuario logado", description = "veículos do usuario logado")
+    public ResponseEntity<List<Sale>> listar() {
+        Integer customerId = getCurrentCustomerId();
+        log.info("lista veiculos do usuario {}", customerId);
+        List<Sale> sales = vehicleSaleService.listSales(customerId);
+        return ResponseEntity.ok(sales);
 
     }
 
