@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- validação do perfil admin no login 
+- documentação
+
+## [0.1.1] - 2025-10-11
+
+### Added
+
 - diagramas de arquitetura e base dados
 - docker compose
 
