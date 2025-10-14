@@ -71,6 +71,9 @@ public class UserValidationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         return
                 path.equals("/") ||
+                path.startsWith("/api/brands") ||
+                path.startsWith("/api/models") ||
+                path.startsWith("/api/vehicles") ||
                 path.startsWith("/api/customers") ||
                 path.startsWith("/info") ||
                 path.startsWith("/swagger-ui") ||
