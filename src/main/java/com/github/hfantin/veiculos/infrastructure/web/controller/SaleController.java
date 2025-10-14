@@ -28,14 +28,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/sales")
 @PreAuthorize("hasRole('ADMIN')")
 @AllArgsConstructor
-@Tag(name = "Vendas", description = "API para gerenciamento de vendas")
+@Tag(name = "Vendas (admin)", description = "API para gerenciamento de vendas")
 public class SaleController {
 
     private final SaleService saleService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @Operation(summary = "Criar uma nova venda", description = "Cadastra uma nova venda no sistema")
+    @Operation(summary = "Criar uma nova venda (admin)", description = "Cadastra uma nova venda no sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Venda criada com sucesso",
                     content = @Content(schema = @Schema(implementation = SaleResponse.class))),

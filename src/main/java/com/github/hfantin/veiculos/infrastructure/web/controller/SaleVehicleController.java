@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/sale-vehicles")
 @PreAuthorize("hasRole('ADMIN')")
 @AllArgsConstructor
-@Tag(name = "Veículos Vendidos", description = "API para gerenciamento de veículos vendidos")
+@Tag(name = "Veículos Vendidos (admin)", description = "API para gerenciamento de veículos vendidos")
 public class SaleVehicleController {
 
     private final SaleVehicleService saleVehicleService;

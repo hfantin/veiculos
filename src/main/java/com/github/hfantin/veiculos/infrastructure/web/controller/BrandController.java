@@ -35,7 +35,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @Operation(summary = "Criar uma nova marca", description = "Cria uma nova marca de veículo no sistema")
+    @Operation(summary = "Criar uma nova marca (admin)", description = "Cria uma nova marca de veículo no sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Marca criada com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos ou marca já existe"),
@@ -93,7 +93,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar uma marca", description = "Atualiza os dados de uma marca existente")
+    @Operation(summary = "Atualizar uma marca (admin)", description = "Atualiza os dados de uma marca existente")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Marca atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
@@ -110,7 +110,7 @@ public class BrandController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletar uma marca", description = "Remove uma marca do sistema")
+    @Operation(summary = "Deletar uma marca (admin)", description = "Remove uma marca do sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Marca deletada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Marca não encontrado")

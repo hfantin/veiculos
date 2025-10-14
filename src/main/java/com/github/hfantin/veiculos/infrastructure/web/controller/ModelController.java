@@ -35,7 +35,7 @@ public class ModelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @Operation(summary = "Criar um novo modelo", description = "Cria um novo modelo de veículo no sistema")
+    @Operation(summary = "Criar um novo modelo (admin)", description = "Cria um novo modelo de veículo no sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Modelo criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos ou modelo já existe"),
@@ -57,7 +57,7 @@ public class ModelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar um modelo", description = "Atualiza os dados de um modelo existente")
+    @Operation(summary = "Atualizar um modelo (admin)", description = "Atualiza os dados de um modelo existente")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Modelo atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
@@ -81,7 +81,7 @@ public class ModelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletar um modelo", description = "Remove um modelo do sistema")
+    @Operation(summary = "Deletar um modelo (admin)", description = "Remove um modelo do sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Modelo deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Modelo não encontrado")

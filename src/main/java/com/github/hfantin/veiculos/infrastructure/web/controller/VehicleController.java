@@ -38,7 +38,7 @@ public class VehicleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @Operation(summary = "Criar um novo veículo", description = "Cria um novo veículo no sistema")
+    @Operation(summary = "Criar um novo veículo (admin)", description = "Cria um novo veículo no sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Veículo criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
@@ -222,7 +222,7 @@ public class VehicleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar um veículo", description = "Atualiza os dados de um veículo existente")
+    @Operation(summary = "Atualizar um veículo (admin)", description = "Atualiza os dados de um veículo existente")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Veículo atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
@@ -253,7 +253,7 @@ public class VehicleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletar um veículo", description = "Remove um veículo do sistema")
+    @Operation(summary = "Deletar um veículo (admin)", description = "Remove um veículo do sistema")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Veículo deletado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Veículo não encontrado")
