@@ -3,7 +3,6 @@ package com.github.hfantin.veiculos.infrastructure.web.controller;
 import com.github.hfantin.veiculos.domain.service.MercadoPagoService;
 import com.github.hfantin.veiculos.domain.service.VehicleSaleService;
 import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,6 +33,8 @@ public class MercadoPagoController {
         //Outra forma de obter o status do pagamento é via webhook
         String idPagamento = mercadoPagoService.obterIdPagamento(payload, params);
         log.info("pagamentos webhook - queryParams={}, payload={}, idPagamento={}", params, payload, idPagamento);
+        String status = mercadoPagoService.verificarStatusPagamento(idPagamento);
+        log.info("status={}", status);
         return ResponseEntity.status(201).build();
     }
 

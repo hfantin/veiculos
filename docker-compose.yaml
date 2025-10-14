@@ -5,8 +5,8 @@ services:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - ${PWD}/src/main/resources/migration/:/docker-entrypoint-initdb.d/
+#    volumes:
+#      - ${PWD}/src/main/resources/migration/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
     networks:

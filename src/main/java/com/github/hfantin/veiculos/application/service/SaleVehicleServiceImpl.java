@@ -1,6 +1,7 @@
 package com.github.hfantin.veiculos.application.service;
 
 import com.github.hfantin.veiculos.domain.model.SaleVehicle;
+import com.github.hfantin.veiculos.domain.model.SaleVehicleBrandModelVehicleDetails;
 import com.github.hfantin.veiculos.domain.repository.SaleVehicleRepository;
 import com.github.hfantin.veiculos.domain.service.SaleVehicleService;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,11 @@ public class SaleVehicleServiceImpl implements SaleVehicleService {
     @Override
     public List<SaleVehicle> findAll() {
         return saleVehicleRepository.findAll();
+    }
+
+    @Override
+    public List<SaleVehicleBrandModelVehicleDetails> findAllByCustomerId(String customerId) {
+        return saleVehicleRepository.findAllByCustomerId(customerId);
     }
 
     @Override

@@ -10,19 +10,19 @@ DELETE from sales;
 ALTER SEQUENCE brands_id_seq RESTART;
 ALTER SEQUENCE models_id_seq RESTART;
 ALTER SEQUENCE vehicles_id_seq RESTART;
---ALTER SEQUENCE customers_id_seq RESTART;
-ALTER SEQUENCE customers_id_seq RESTART WITH 1;
+ALTER SEQUENCE customers_id_seq RESTART WITH 3;
 ALTER SEQUENCE sales_id_seq RESTART;
 ALTER SEQUENCE sale_vehicles_id_seq RESTART;
-
---INSERT INTO public.customers
---(id, auth_id, first_name, last_name, email, phone, address, cpf, validated, "type", created_at, updated_at)
---VALUES(1, 'google-oauth2|107110815602563500624', 'Hamilton', '---', 'hfantin@gmail.com', '1199998888', 'Rua teste, numero 1234566', '11144477735', true, 'USER', '2025-10-10 18:42:35.152', '2025-10-10 18:42:35.152');
 
 
 INSERT INTO public.customers
 (id, auth_id, first_name, last_name, email, phone, address, cpf, validated, "type", created_at, updated_at)
 VALUES(1, 'google-oauth2|118310884889032345464', 'Hamilton', 'Dev', 'backstagefood6@gmail.com', '1199998888', 'Rua teste, numero 1234566', '11144477735', true, 'ADMIN', '2025-10-12 12:12:20.879', '2025-10-12 12:12:20.879');
+
+
+INSERT INTO public.customers
+(id, auth_id, first_name, last_name, email, phone, address, cpf, validated, "type", created_at, updated_at)
+VALUES(2, 'google-oauth2|107110815602563500624', 'Hamilton', 'Desconhecido', 'hfantin@gmail.com', '1188888888', 'avenida paulista, 2000', '00000000191', true, 'USER', '2025-10-12 13:58:57.499', '2025-10-12 13:59:36.600');
 
 -- popular as tabelas marcas de veículos
 INSERT INTO brands (name) VALUES
@@ -182,7 +182,7 @@ INSERT INTO vehicles (model_id, year, color, price, status) VALUES
 
 -- Veículos Fiat
 INSERT INTO vehicles (model_id, year, color, price, status) VALUES
-(11, 2023, 'Verde', 45000.00, 'AVAILABLE'),
+(11, 2023, 'Verde', 1.00, 'AVAILABLE'),
 (12, 2022, 'Branco', 40000.00, 'SOLD'),
 (13, 2023, 'Prata', 60000.00, 'AVAILABLE'),
 (14, 2022, 'Preto', 55000.00, 'AVAILABLE'),

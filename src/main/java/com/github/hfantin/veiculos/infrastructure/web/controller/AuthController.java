@@ -65,4 +65,9 @@ public class AuthController {
         return response;
     }
 
+
+    @GetMapping("/auth/token")
+    public Map<String, Object> token(@AuthenticationPrincipal OidcUser principal) {
+        return principal.getClaims();
+    }
 }

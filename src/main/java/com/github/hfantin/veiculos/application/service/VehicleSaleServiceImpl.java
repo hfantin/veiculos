@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -168,5 +169,12 @@ public class VehicleSaleServiceImpl implements VehicleSaleService {
         }
 
         return updatedSale;
+    }
+
+
+    @Override
+    public List<Sale> listSales(Integer customerId) {
+        log.info("lista compras do usuario {}",  customerId);
+        return saleService.findByCustomerId(customerId);
     }
 }

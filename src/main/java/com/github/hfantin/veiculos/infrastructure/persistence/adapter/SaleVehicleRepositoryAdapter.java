@@ -1,11 +1,13 @@
 package com.github.hfantin.veiculos.infrastructure.persistence.adapter;
 
 import com.github.hfantin.veiculos.domain.model.SaleVehicle;
+import com.github.hfantin.veiculos.domain.model.SaleVehicleBrandModelVehicleDetails;
 import com.github.hfantin.veiculos.domain.repository.SaleVehicleRepository;
 import com.github.hfantin.veiculos.infrastructure.persistence.entity.SaleVehicleEntity;
 import com.github.hfantin.veiculos.infrastructure.persistence.repository.SaleVehicleJpaRepository;
 import com.github.hfantin.veiculos.infrastructure.persistence.mapper.SaleVehicleEntityMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
+@Slf4j
 public class SaleVehicleRepositoryAdapter implements SaleVehicleRepository {
 
     private final SaleVehicleJpaRepository saleVehicleJpaRepository;
@@ -65,5 +68,14 @@ public class SaleVehicleRepositoryAdapter implements SaleVehicleRepository {
     @Override
     public boolean existsByVehicleId(Integer vehicleId) {
         return saleVehicleJpaRepository.existsByVehicleId(vehicleId);
+//        Optional<SaleVehicleEntity> saleVehicleEntity = saleVehicleJpaRepository.existsByVehicleId(vehicleId);
+//        log.info("verifica se existe compra pendente de veiculo {}", saleVehicleEntity);
+//        return saleVehicleEntity.isPresent();
     }
+
+    @Override
+    public List<SaleVehicleBrandModelVehicleDetails> findAllByCustomerId(String customerId){
+        return saleVehicleJpaRepository.findAllByCustomeId(customerId).stream().map(saleVehicleEntityMapper::toDomainWithModelBrandVehicle).toList();
+    }
+    
 }
